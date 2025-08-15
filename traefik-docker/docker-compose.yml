@@ -1,0 +1,20 @@
+services:
+  traefik:
+    image: traefik:3.5.0
+    container_name: traefik
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik-conf:/etc/traefik
+      - ./traefik-conf/dynamic_conf.yml:/etc/traefik/dynamic_conf.yml
+      - ./ssl:/etc/ssl:ro
+    command:
+      - "--log.level=ERROR"
+      - "--accesslog=false"
+      - "--api.dashboard=false"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.file.filename=/etc/traefik/dynamic_conf.yml"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.websecure.http.tls=true"
+    network_mode: "host"

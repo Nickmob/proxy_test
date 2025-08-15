@@ -1,0 +1,1669 @@
+
+
+<!DOCTYPE html>
+
+
+    <html itemscope itemtype="https://schema.org/QAPage" class="html__responsive " lang="en">
+
+    <head>
+
+        <title>security - How can I let nginx log the used SSL/TLS protocol and ciphersuite? - Server Fault</title>
+        <link rel="shortcut icon" href="https://cdn.sstatic.net/Sites/serverfault/Img/favicon.ico?v=18e9cc4f2aea">
+        <link rel="apple-touch-icon" href="https://cdn.sstatic.net/Sites/serverfault/Img/apple-touch-icon.png?v=6c3100d858bb">
+        <link rel="image_src" href="https://cdn.sstatic.net/Sites/serverfault/Img/apple-touch-icon.png?v=6c3100d858bb"> 
+        <link rel="search" type="application/opensearchdescription+xml" title="Server Fault" href="/opensearch.xml">
+        <link rel="canonical" href="https://serverfault.com/questions/620123/how-can-i-let-nginx-log-the-used-ssl-tls-protocol-and-ciphersuite" />
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+        <meta property="og:type" content= "website" />
+        <meta property="og:url" content="https://serverfault.com/questions/620123/how-can-i-let-nginx-log-the-used-ssl-tls-protocol-and-ciphersuite"/>
+        <meta property="og:site_name" content="Server Fault" />
+        <meta property="og:image" itemprop="image primaryImageOfPage" content="https://cdn.sstatic.net/Sites/serverfault/Img/apple-touch-icon@2.png?v=9b1f48ae296b" />
+        <script type="application/ld+json">
+            {
+              "@context" : "https://schema.org",
+              "@type" : "WebSite",
+              "name" : "Server Fault",
+              "url" : "https://serverfault.com"
+            }
+        </script>
+        <meta name="twitter:card" content="summary"/>
+        <meta name="twitter:domain" content="serverfault.com"/>
+        <meta name="twitter:title" property="og:title" itemprop="name" content="How can I let nginx log the used SSL/TLS protocol and ciphersuite?" />
+        <meta name="twitter:description" property="og:description" itemprop="description" content="My goal is to ensure proper security for clients connecting to my nginx. I&#x27;m following Mozilla&#x27;s guide to configure TLS properly on my nginx installation, but I don&#x27;t have an overview of the actual " />
+    <script id="webpack-public-path" type="text/uri-list">https://cdn.sstatic.net/</script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script defer src="https://cdn.sstatic.net/Js/third-party/npm/@stackoverflow/stacks/dist/js/stacks.min.js?v=50aa961744df"></script>
+    <script src="https://cdn.sstatic.net/Js/stub.en.js?v=a565408b9378"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.sstatic.net/Shared/stacks.css?v=af8ee92b6464">
+    <link rel="stylesheet" type="text/css" href="https://cdn.sstatic.net/Sites/serverfault/primary.css?v=81d6fc9faf37">
+    <script type="application/json" data-role="module-args" data-module-name="Shared/options.mod">{"options":{"locale":"en","serverTime":1755248972,"routeName":"Questions/Show","stackAuthUrl":"https://stackauth.com","networkMetaHostname":"meta.stackexchange.com","site":{"name":"Server Fault","description":"Q\u0026A for system and network administrators","isNoticesTabEnabled":true,"enableNewTagCreationWarning":true,"insertSpaceAfterNameTabCompletion":false,"id":2,"cookieDomain":".serverfault.com","childUrl":"https://meta.serverfault.com","negativeVoteScoreFloor":null,"enableSocialMediaInSharePopup":true,"protocol":"https"},"user":{"fkey":"73f6460638360ffb2e4a8ecc08f5f93d06cf2b354c0ac2f03321650dda88b578","tid":"cd60f717-59c4-6195-b6bf-270e990b8f17","rep":0,"isAnonymous":true,"isAnonymousNetworkWide":true},"realtime":{"newest":true,"active":true,"tagged":true,"staleDisconnectIntervalInHours":0},"events":{"postType":{"question":1},"postEditionSection":{"title":1,"body":2,"tags":3}}}}</script>
+<script type="application/json" data-role="module-args" data-module-name="Shared/settings.mod">{"settings":{"site":{"allowImageUploads":true,"stacksEditorPreviewEnabled":true,"enableUserHovercards":true,"styleCode":true,"forceHttpsImages":true,"enableImageHttps":true},"auth":{"oauthInPopup":true},"questions":{"enableSavesFeature":true,"enableQuestionTitleLengthLiveWarning":true,"maxTitleSize":150,"questionTitleLengthStartLiveWarningChars":50},"accounts":{"currentPasswordRequiredForChangingStackIdPassword":true},"image":{"maxImageUploadSizeInBytesAnimatedGif":2097152,"maxImageUploadSizeInBytes":10485760},"mentions":{"maxNumUsersInDropdown":50},"snippets":{"stacksEditorSnippetsEnabledFor":{"Metadata":{"Name":"SubCommunitiesSettings.EnabledFor","Filter":0},"AppliedFilter":0,"IsNobody":true,"All":false,"Anonymous":false,"LoggedIn":false,"ChannelsMembers":false,"Moderators":false,"Employees":false,"Developers":false,"TeamAdmins":false,"AccountIds":[],"ExcludedAccountIds":[],"Serialization":""},"renderDomain":"stacksnippets.net"},"questionLinkTitleReplacement":{"maxReplacementsPerSite":20,"maxNumberOfSitesProcessed":10},"intercom":{"appId":"inf0secd"},"elections":{"opaVoteResultsBaseUrl":"https://www.opavote.com/results/"},"search":{},"markdown":{"enableTables":true},"flags":{"allowRetractingCommentFlags":true,"allowRetractingFlags":true},"userMessaging":{"showNewFeatureNotice":true},"comments":{},"paths":{"jQueryUIJSPath":"https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js","jQueryUICSSPath":"https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/themes/smoothness/jquery-ui.css"},"legal":{"oneTrustTCFConfigId":"b7645c37-9f82-4dfb-b719-2b5d032b2a75","useCustomConsent":false},"tags":{},"subscriptions":{"defaultBasicMaxTrueUpSeats":250,"defaultFreemiumMaxTrueUpSeats":50,"defaultMaxTrueUpSeats":1000}}}</script>
+<script>StackExchange.init();</script>
+
+    <script>
+        StackExchange.using.setCacheBreakers({"Js/adops.en.js":"6da43f5e0a84","Js/ask.en.js":"","Js/begin-edit-event.en.js":"dd955babf04d","Js/copy-transpiled.en.js":"673f70174afe","Js/events.en.js":"","Js/explore-qlist.en.js":"ee2a4f8c3992","Js/full-anon.en.js":"f9671e79fe5c","Js/full.en.js":"42e5f51321b4","Js/highlightjs-loader.en.js":"367954505ed3","Js/inline-tag-editing.en.js":"8517756a2cb6","Js/keyboard-shortcuts.en.js":"c255a5a5979b","Js/markdown-it-loader.en.js":"9e901e1e3a2c","Js/mentions-transpiled.en.js":"5b9b141088c7","Js/moderator.en.js":"5cd95209f4da","Js/postCollections-transpiled.en.js":"7fe248fe9dd2","Js/post-validation.en.js":"44d59ccfc490","Js/question-editor.en.js":"","Js/review-v2-transpiled.en.js":"a64dac28486c","Js/revisions.en.js":"9dd135bb585f","Js/stacks-editor.en.js":"d972b7e1582f","Js/tageditor.en.js":"5b8f289d02ef","Js/tageditornew.en.js":"da1bb9b12d0f","Js/tagsuggestions.en.js":"c54b483b692e","Js/unlimited-transpiled.en.js":"8713a979101d","Js/wmd.en.js":"6c772750a204"});
+        StackExchange.using("gps", function() {
+             StackExchange.gps.init(true);
+        });
+    </script>
+    <noscript id="noscript-css"><style>body,.s-topbar{margin-top:1.9em}</style></noscript>
+    </head>
+    <body class="question-page unified-theme">
+
+        
+<div id="signup-modal-container"></div>
+<script type="application/json" data-role="module-args" data-module-name="islands/signup-modal/index.mod">{"ContainerElementId":"signup-modal-container","FKey":"73f6460638360ffb2e4a8ecc08f5f93d06cf2b354c0ac2f03321650dda88b578","TriggerEvent":"signupModalShow","OauthInPopup":true,"ReturnUrl":"https://serverfault.com/questions/620123/how-can-i-let-nginx-log-the-used-ssl-tls-protocol-and-ciphersuite","ReturnUrlForPopup":"https://serverfault.com/users/after-signup/oauth-only","SiteName":"Server Fault","SiteLogoPath":"https://cdn.sstatic.net/Sites/serverfault/Img/icon-48.png?v=6b7c3ee65dd2","AuthProviders":["Google"],"ParentSiteUrl":"","IsInitiallyVisible":false}</script>
+<script defer src="https://cdn.sstatic.net/Js/webpack-chunks/svelte.en.js?v=a889db2f4068"></script><script defer src="https://cdn.sstatic.net/Js/webpack-chunks/stacks-svelte.en.js?v=c6c0c7284622"></script><script defer src="https://cdn.sstatic.net/Js/webpack-chunks/8901.en.js?v=9ff34567d3a5"></script><script defer src="https://cdn.sstatic.net/Js/islands/signup-modal.en.js?v=cb1f1ed28d3a"></script>
+
+<script defer>
+    dispatchEvent(new CustomEvent("openSignupModal"));
+</script>
+    
+        <div id="one-tap-container"></div>
+<script type="application/json" data-role="module-args" data-module-name="islands/one-tap/index.mod">{"ContainerElementId":"one-tap-container","FKey":"73f6460638360ffb2e4a8ecc08f5f93d06cf2b354c0ac2f03321650dda88b578","GoogleClientId":"717762328687-iludtf96g1hinl76e4lc1b9a82g457nn.apps.googleusercontent.com","Autoselect":false,"ReturnUrl":"https%253a%252f%252fserverfault.com%252fquestions%252f620123%252fhow-can-i-let-nginx-log-the-used-ssl-tls-protocol-and-ciphersuite"}</script><script defer src="https://cdn.sstatic.net/Js/webpack-chunks/svelte.en.js?v=a889db2f4068"></script><script defer src="https://cdn.sstatic.net/Js/islands/one-tap.en.js?v=fd64ec49bac4"></script>    <div id="notify-container"></div>
+    <div id="custom-header"></div>
+        <li class="js-topbar-dialog-corral">
+    <a
+    href="/"
+    class="s-block-link pl8 js-gps-track nav-links--link -link__with-icon"
+    
+    data-gps-track="top_nav.click({is_current: false, location:2, destination:8,  has_activity_notification:False});home_nav.click({location:2})"
+    aria-controls=" "
+    data-controller="  "
+    data-s-popover-placement="right"
+    data-left-nav-events-navigation-destination-value=""
+    data-left-nav-events-navigation-location-value=""
+    data-left-nav-events-navigation-activity-notification-value=""
+    data-action=""
+    aria-current="false"
+    data-s-popover-auto-show="true" data-s-popover-hide-on-outside-click="never"
+    >
+        <div class="d-flex ai-center">
+<svg aria-hidden="true" class="svg-icon iconHome" width="18" height="18"  viewBox="0 0 18 18"><path  d="M15 10v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5H0l9-9 9 9zm-8 1v6h4v-6z"/></svg>                <span class="-link--channel-name pl8">Home</span>
+
+        </div>
+    </a>
+</li>
+
+
+
+
+
+
+
+
+
+                        
+
+<li class="ps-relative  youarehere"  aria-current="true">
+
+
+    <a id="nav-questions"
+    href="/questions"
+    class="s-block-link pl8 js-gps-track nav-links--link -link__with-icon"
+    
+    data-gps-track="top_nav.click({is_current: true, location:2, destination:1,  has_activity_notification:False})"
+    aria-controls=" "
+    data-controller="  "
+    data-s-popover-placement="right"
+    data-left-nav-events-navigation-destination-value=""
+    data-left-nav-events-navigation-location-value=""
+    data-left-nav-events-navigation-activity-notification-value=""
+    data-action=""
+    aria-current="false"
+    data-s-popover-auto-show="true" data-s-popover-hide-on-outside-click="never"
+    >
+        <div class="d-flex ai-center">
+<svg aria-hidden="true" class="svg-icon iconQuestion" width="18" height="18"  viewBox="0 0 18 18"><path  d="m4 15-3 3V4c0-1.1.9-2 2-2h12c1.09 0 2 .91 2 2v9c0 1.09-.91 2-2 2zm7.75-3.97c.72-.83.98-1.86.98-2.94 0-1.65-.7-3.22-2.3-3.83a4.4 4.4 0 0 0-3.02 0 3.8 3.8 0 0 0-2.32 3.83q0 1.93 1.03 3a3.8 3.8 0 0 0 2.85 1.07q.94 0 1.71-.34.97.66 1.06.7.34.2.7.3l.59-1.13a5 5 0 0 1-1.28-.66m-1.27-.9a5 5 0 0 0-1.5-.8l-.45.9q.5.18.98.5-.3.1-.65.11-.92 0-1.52-.68c-.86-1-.86-3.12 0-4.11.8-.9 2.35-.9 3.15 0 .9 1.01.86 3.03-.01 4.08"/></svg>                <span class="-link--channel-name pl8">Questions</span>
+
+        </div>
+    </a>
+</li>
+
+
+
+
+
+
+
+
+                            
+
+<li class="ps-relative"  aria-current="false">
+
+
+    <a id="nav-unanswered"
+    href="/unanswered"
+    class="s-block-link pl8 js-gps-track nav-links--link -link__with-icon"
+    
+    data-gps-track="top_nav.click({is_current: false, location:2, destination:5,  has_activity_notification:False})"
+    aria-controls=" "
+    data-controller="  "
+    data-s-popover-placement="right"
+    data-left-nav-events-navigation-destination-value=""
+    data-left-nav-events-navigation-location-value=""
+    data-left-nav-events-navigation-activity-notification-value=""
+    data-action=""
+    aria-current="false"
+    data-s-popover-auto-show="true" data-s-popover-hide-on-outside-click="never"
+    >
+        <div class="d-flex ai-center">
+<svg aria-hidden="true" class="svg-icon iconAnswer" width="18" height="18"  viewBox="0 0 18 18"><path  d="M14 15H3c-1.09 0-2-.91-2-2V4c0-1.1.9-2 2-2h12c1.09 0 2 .91 2 2v14zm-1.02-3L9.82 4H8.14l-3.06 8h1.68l.65-1.79h3.15l.69 1.79zm-2.93-3.12H7.9l1.06-2.92z"/></svg>                <span class="-link--channel-name pl8">Unanswered</span>
+
+        </div>
+    </a>
+</li>
+
+
+
+
+
+
+
+
+                            
+
+<li class="ps-relative"  aria-current="false">
+
+
+    <a id="nav-askstack"
+    href="https://stackoverflow.ai"
+    class="s-block-link h32 pl8 ai-center js-disable-askstack-new-link js-gps-track nav-links--link -link__with-icon"
+    
+    data-gps-track="top_nav.click({is_current: false, location:2, destination:33,  has_activity_notification:False})"
+    aria-controls=" "
+    data-controller="  "
+    data-s-popover-placement="right"
+    data-left-nav-events-navigation-destination-value=""
+    data-left-nav-events-navigation-location-value=""
+    data-left-nav-events-navigation-activity-notification-value=""
+    data-action=""
+    aria-current="false"
+    data-s-popover-auto-show="true" data-s-popover-hide-on-outside-click="never"
+    >
+        <div class="d-flex ai-center">
+<div class="d-flex ai-center mln8 mrn8 myn8 bg-purple-400 baw3 bas-solid bc-purple-200 bar-circle fc-white p4"><svg aria-hidden="true" class="fc-white bg-transparent h16 w16 svg-icon iconAnswerAI" width="18" height="18"  viewBox="0 0 18 18"><path  d="M15 1a2 2 0 0 1 2 2v14l-3-3H3c-1.09 0-2-.91-2-2V3c0-1.09.91-2 2-2zM8.2 4.13a.2.2 0 0 0-.37 0l-.57 1.31a3.5 3.5 0 0 1-1.82 1.82l-1.3.57a.2.2 0 0 0 0 .36l1.3.57c.82.35 1.47 1 1.82 1.82l.57 1.3c.07.17.3.17.36 0l.57-1.3a3.5 3.5 0 0 1 1.82-1.82l1.3-.57a.2.2 0 0 0 0-.36l-1.3-.57a3.5 3.5 0 0 1-1.82-1.82zm4.9-1.07a.1.1 0 0 0-.2 0l-.28.66c-.17.4-.5.73-.9.9l-.66.29a.1.1 0 0 0 0 .18l.66.29c.4.17.73.5.9.9l.29.66a.1.1 0 0 0 .18 0l.29-.66c.17-.4.5-.73.9-.9l.66-.29a.1.1 0 0 0 0-.18l-.66-.29c-.4-.17-.73-.5-.9-.9z"/></svg></div>                <span class="-link--channel-name pl8">AI Assist</span>
+<label class="pt6 s-label s-label__sm"><span class="s-label--status s-label--status__beta">Labs</span></label>
+        </div>
+    </a>
+</li>
+
+
+
+
+
+    <script>
+        $('.js-disable-askstack-new-link').on("click", function(e) {
+            StackExchange.helpers.toggleAccountPreferenceFlags(4194304, true);
+            return true;
+        });
+    </script>
+
+
+
+
+                        
+
+<li class="ps-relative"  aria-current="false">
+
+
+    <a
+    href="/tags"
+    class="s-block-link pl8 js-gps-track nav-links--link -link__with-icon"
+    
+    data-gps-track="top_nav.click({is_current: false, location:2, destination:2,  has_activity_notification:False})"
+    aria-controls=" "
+    data-controller="  "
+    data-s-popover-placement="right"
+    data-left-nav-events-navigation-destination-value=""
+    data-left-nav-events-navigation-location-value=""
+    data-left-nav-events-navigation-activity-notification-value=""
+    data-action=""
+    aria-current="false"
+    data-s-popover-auto-show="true" data-s-popover-hide-on-outside-click="never"
+    >
+        <div class="d-flex ai-center">
+<svg aria-hidden="true" class="svg-icon iconTags" width="18" height="18"  viewBox="0 0 18 18"><path  d="M9.24 1a3 3 0 0 0-2.12.88l-5.7 5.7a2 2 0 0 0-.38 2.31 3 3 0 0 1 .67-1.01l6-6A3 3 0 0 1 9.83 2H14a3 3 0 0 1 .79.1A2 2 0 0 0 13 1z" opacity=".4"/><path  d="M9.83 3a2 2 0 0 0-1.42.59l-6 6a2 2 0 0 0 0 2.82L6.6 16.6a2 2 0 0 0 2.82 0l6-6A2 2 0 0 0 16 9.17V5a2 2 0 0 0-2-2zM12 9a2 2 0 1 1 0-4 2 2 0 0 1 0 4"/></svg>                <span class="-link--channel-name pl8">Tags</span>
+
+        </div>
+    </a>
+</li>
+
+
+
+
+
+
+
+
+
+                        <li class="pb24"></li>
+
+
+                            <li class="ps-relative">
+                                <a id="nav-chat"
+                                href=https://chat.stackexchange.com/rooms/158962/stack-exchange-lobby
+                                class="s-block-link pl8 ai-center js-disable-chat-new-link js-ch-popover-controller js-gps-track nav-links--link -link__with-icon"
+                                aria-expanded="true"
+                                aria-current="false"
+                                data-gps-track="chat.click({ is_registered:false, rep_bucket:'new', origin:'Server Fault' })"
+                                data-controller=" "
+                                >
+                                    <div class="d-flex ai-center">
+                                        <div class="d-flex ai-center mln8 mrn8 myn8 bg-purple-400 baw3 bas-solid bc-purple-200 bar-circle fc-white p4"><svg aria-hidden="true" class="fc-white bg-transparent  svg-icon iconChatTest" width="18" height="18"  viewBox="0 0 18 16"><path d="M17 3C17 1.89543 16.1046 1 15 1H7C5.89543 1 5 1.89543 5 3V5C5 6.10457 5.89543 7 7 7H15C16.1046 7 17 6.10457 17 5V3ZM7 3H15V5H7V3Z" /><path d="M17 10C17 8.89543 16.1046 8 15 8H7C5.89543 8 5 8.89543 5 10V14C5 15.1046 5.89543 16 7 16H15C16.1046 16 17 15.1046 17 14V10ZM7 10H15V14H7V10Z" /><path d="M1 9C1 8.44771 1.44772 8 2 8H3C3.55228 8 4 8.44772 4 9V10C4 10.5523 3.55228 11 3 11H2C1.44772 11 1 10.5523 1 10V9Z" /><path d="M2 1C1.44772 1 1 1.44772 1 2V3C1 3.55228 1.44772 4 2 4H3C3.55228 4 4 3.55228 4 3V2C4 1.44772 3.55228 1 3 1H2Z" /></svg></div>
+                                    </div>
+                                    <span class="-link--channel-name pl8">Chat</span>
+                                   </a>
+                            </li>
+
+
+                        
+
+<li class="ps-relative"  aria-current="false">
+
+
+    <a id="nav-users"
+    href="/users"
+    class="s-block-link pl8 js-gps-track nav-links--link -link__with-icon"
+    
+    data-gps-track="top_nav.click({is_current: false, location:2, destination:3,  has_activity_notification:False})"
+    aria-controls=" "
+    data-controller="  "
+    data-s-popover-placement="right"
+    data-left-nav-events-navigation-destination-value=""
+    data-left-nav-events-navigation-location-value=""
+    data-left-nav-events-navigation-activity-notification-value=""
+    data-action=""
+    aria-current="false"
+    data-s-popover-auto-show="true" data-s-popover-hide-on-outside-click="never"
+    >
+        <div class="d-flex ai-center">
+<svg aria-hidden="true" class="svg-icon iconPeople" width="18" height="18"  viewBox="0 0 18 18"><path  d="M17 14c0 .44-.45 1-1 1H9a1 1 0 0 1-1-1H2c-.54 0-1-.56-1-1 0-2.63 3-4 3-4s.23-.4 0-1c-.84-.62-1.06-.59-1-3s1.37-3 2.5-3 2.44.58 2.5 3-.16 2.38-1 3c-.23.59 0 1 0 1s1.55.71 2.42 2.09c.78-.72 1.58-1.1 1.58-1.1s.23-.4 0-1c-.84-.61-1.06-.58-1-3s1.37-3 2.5-3 2.44.59 2.5 3c.05 2.42-.16 2.39-1 3-.23.6 0 1 0 1s3 1.38 3 4"/></svg>                <span class="-link--channel-name pl8">Users</span>
+
+        </div>
+    </a>
+</li>
+
+
+
+
+
+
+
+
+
+                        <li class="pb24"></li>
+
+
+
+                            
+
+<li class="ps-relative"  aria-current="false">
+
+
+    <a id="nav-companies"
+    href="https://stackoverflow.com/jobs/companies?so_medium=serverfault&amp;so_source=SiteNav"
+    class="s-block-link pl8 js-gps-track nav-links--link -link__with-icon"
+    
+    data-gps-track="top_nav.click({is_current: false, location:2, destination:12,  has_activity_notification:False})"
+    aria-controls=" "
+    data-controller="  "
+    data-s-popover-placement="right"
+    data-left-nav-events-navigation-destination-value=""
+    data-left-nav-events-navigation-location-value=""
+    data-left-nav-events-navigation-activity-notification-value=""
+    data-action=""
+    aria-current="false"
+    data-s-popover-auto-show="true" data-s-popover-hide-on-outside-click="never"
+    >
+        <div class="d-flex ai-center">
+<svg aria-hidden="true" class="svg-icon iconIndustry" width="18" height="18"  viewBox="0 0 18 18"><path  d="M10 16v-4H8v4H2V4c0-1.1.9-2 2-2h6c1.09 0 2 .91 2 2v2h2c1.09 0 2 .91 2 2v8zM4 4v2h2V4zm0 4v2h2V8zm4-4v2h2V4zm0 4v2h2V8zm-4 4v2h2v-2zm8 0v2h2v-2zm0-4v2h2V8z"/></svg>                <span class="-link--channel-name pl8">Companies</span>
+
+        </div>
+    </a>
+</li>
+
+
+
+
+
+
+
+
+                    </ol>
+                </li>
+
+                
+
+        
+
+<li class="js-freemium-cta ps-relative mt32 mb8">
+
+
+    <div class="fs-fine tt-uppercase fc-black-600 fw-bold ml8 mt16 mb8">Teams</div>
+
+    <div class="px12 pt12 pb4 mb12 fc-medium overflow-hidden">        
+        <img class="wmx100 mx-auto mb12 h-auto d-block" width="151" height="24" src="https://cdn.sstatic.net/Img/teams/teams-promo.svg?v=e507948b81bf" alt="">
+        <p class="fs-fine">
+            Ask questions, find answers and collaborate at work with Stack Overflow for Teams.
+        </p>
+        <a href="https://stackoverflowteams.com/teams/create/free/?utm_medium=referral&utm_source=serverfault-community&utm_campaign=side-bar&utm_content=explore-teams"
+           class="w100 s-btn s-btn__filled s-btn__xs bg-orange-400 h:bg-orange-500 js-gps-track pt8 pr7 pb6 pl7"
+           data-gps-track="teams.create.left-sidenav.click({ Action: 6 })"
+           data-ga="[&quot;teams left navigation - anonymous&quot;,&quot;left nav free cta&quot;,&quot;stackoverflow.com/teams/create/free&quot;,null,null]">Try Teams for free</a>
+        <a href="https://stackoverflow.co/teams/?utm_medium=referral&utm_source=serverfault-community&utm_campaign=side-bar&utm_content=explore-teams"
+           class="w100 s-btn s-btn__muted s-btn__xs mt1 js-gps-track"
+           data-gps-track="teams.create.left-sidenav.click({ Action: 5 })"
+           data-ga="[&quot;teams left navigation - anonymous&quot;,&quot;left nav free cta&quot;,&quot;stackoverflow.com/teams&quot;,null,null]">Explore Teams</a>
+    </div>
+</li>
+
+
+    <li class="d-flex ai-center jc-space-between ml8 mt32 mb8 js-create-team-cta d-none">
+
+        <a href="javascript:void(0)"
+            class="s-link d-flex fl-grow1 fc-black-400 h:fc-black-600 fs-fine js-gps-track"
+            role="button"
+            aria-controls="popover-teams-create-cta"
+            data-controller="s-popover"
+            data-action="s-popover#toggle"
+            data-s-popover-placement="bottom-start"
+            data-s-popover-toggle-class="is-selected"
+            data-gps-track="teams.create.left-sidenav.click({ Action: ShowInfo })"
+            data-ga="[&quot;teams left navigation - anonymous&quot;,&quot;left nav show teams info&quot;,null,null,null]"
+         >
+            <div class="flex--item fl-grow1 fc-black-600 fw-bold tt-uppercase">Teams</div>
+            <div class="flex--item px12">
+                <svg aria-hidden="true" class="svg-icon iconPlusSm" width="14" height="14"  viewBox="0 0 14 14"><path  d="M8 2H6v4H2v2h4v4h2V8h4V6H8z"/></svg>
+            </div>
+        </a>
+    </li>
+    <li class="ps-relative js-create-team-cta d-none">
+        <p class="fs-fine pr8 pl8 pb4 fc-black-400">
+            Ask questions, find answers and collaborate at work with Stack Overflow for Teams.
+            <a href="https://stackoverflow.co/teams/?utm_medium=referral&utm_source=serverfault-community&utm_campaign=side-bar&utm_content=explore-teams-compact" class="s-link s-link__grayscale s-link__underlined fw-bold">Explore Teams</a>
+        </p>
+    </li> 
+
+            </ol>
+        </nav>
+    </div>
+
+
+
+        <div class="s-popover ws2"
+        id="popover-teams-create-cta"
+        role="menu"
+        aria-hidden="true">
+            <div class="s-popover--arrow"></div>
+
+            <div class="ps-relative overflow-hidden">
+                <p class="mb2"><strong>Teams</strong></p>
+                <p class="mb12 fs-caption fc-black-400">Q&amp;A for work</p>
+                <p class="mb12 fs-caption fc-black-500">Connect and share knowledge within a single location that is structured and easy to search.</p>
+                <a href="https://stackoverflow.co/teams/"
+                class="js-gps-track s-btn s-btn__filled s-btn__xs"
+                data-gps-track="teams.create.left-sidenav.click({ Action: CtaClick })"
+                data-ga="[&quot;teams left navigation - anonymous&quot;,&quot;left nav cta&quot;,&quot;stackoverflow.com/teams&quot;,null,null]">
+                    Learn more about Teams
+                </a>
+            </div>
+
+            <div class="ps-absolute t8 r8">
+                <svg aria-hidden="true" class="fc-orange-400 svg-spot spotPeople" width="48" height="48"  viewBox="0 0 48 48"><path  d="M13.5 28a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9M7 30a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v5h11v-5a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v10a2 2 0 0 1-2 2H33v5a1 1 0 0 1-1 1H20a1 1 0 0 1-1-1v-5H8a1 1 0 0 1-1-1zm25-6.5a4.5 4.5 0 1 0 9 0 4.5 4.5 0 0 0-9 0M24.5 34a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9" opacity=".2"/><path  d="M16.4 26.08A6 6 0 1 0 7.53 26C5.64 26.06 4 27.52 4 29.45V40a1 1 0 0 0 1 1h9a1 1 0 1 0 0-2h-4v-7a1 1 0 1 0-2 0v7H6v-9.55c0-.73.67-1.45 1.64-1.45H16a1 1 0 0 0 .4-1.92M12 18a4 4 0 1 1 0 8 4 4 0 0 1 0-8m16.47 14a6 6 0 1 0-8.94 0A3.6 3.6 0 0 0 16 35.5V46a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V35.5c0-1.94-1.64-3.42-3.53-3.5M20 28a4 4 0 1 1 8 0 4 4 0 0 1-8 0m-.3 6h8.6c1 0 1.7.75 1.7 1.5V45h-2v-7a1 1 0 1 0-2 0v7h-4v-7a1 1 0 1 0-2 0v7h-2v-9.5c0-.75.7-1.5 1.7-1.5M42 22c0 1.54-.58 2.94-1.53 4A3.5 3.5 0 0 1 44 29.45V40a1 1 0 0 1-1 1h-9a1 1 0 1 1 0-2h4v-7a1 1 0 1 1 2 0v7h2v-9.55A1.5 1.5 0 0 0 40.48 28H32a1 1 0 0 1-.4-1.92A6 6 0 1 1 42 22m-2 0a4 4 0 1 0-8 0 4 4 0 0 0 8 0"/><g  opacity=".35"><path d="M17 10a1 1 0 011-1h12a1 1 0 110 2H18a1 1 0 01-1-1m1-5a1 1 0 100 2h12a1 1 0 100-2zM14 1a1 1 0 00-1 1v12a1 1 0 001 1h5.09l4.2 4.2a1 1 0 001.46-.04l3.7-4.16H34a1 1 0 001-1V2a1 1 0 00-1-1zm1 12V3h18v10h-5a1 1 0 00-.75.34l-3.3 3.7-3.74-3.75a1 1 0 00-.71-.29z"/></g></svg>
+            </div>
+        </div>
+
+
+
+
+</div>
+
+
+
+        <div id="content" class="">
+
+            
+
+
+
+<div id="redirect-action-modal-container"></div>
+<script type="application/json" data-role="module-args" data-module-name="islands/redirect-action-modal/index.mod">{"ContainerElementId":"redirect-action-modal-container","FKey":"73f6460638360ffb2e4a8ecc08f5f93d06cf2b354c0ac2f03321650dda88b578","UpvoteHeaderImageUrl":"https://cdn.sstatic.net/Img/modal/img-upvote.png?v=fce73bd9724d","DownvoteHeaderImageUrl":"https://cdn.sstatic.net/Img/modal/img-downvote.png?v=d15b4e291f8c","EnableUpvoteModal":true,"SuggestEditAvailable":true,"PostTagNames":["nginx","security","logging","tls","ssl"]}</script>
+<script defer src="https://cdn.sstatic.net/Js/webpack-chunks/svelte.en.js?v=a889db2f4068"></script><script defer src="https://cdn.sstatic.net/Js/webpack-chunks/stacks-svelte.en.js?v=c6c0c7284622"></script><script defer src="https://cdn.sstatic.net/Js/islands/redirect-action-modal.en.js?v=c1132153610b"></script>
+
+
+<div itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+    <link itemprop="image" href="https://cdn.sstatic.net/Sites/serverfault/Img/apple-touch-icon.png?v=6c3100d858bb">
+
+    <div class="inner-content clearfix">
+        
+
+            <div id="question-header" class="d-flex sm:fd-column">
+                        <h1 itemprop="name" class="fs-headline1 ow-anywhere mb8 flex--item fl1"><a href="/questions/620123/how-can-i-let-nginx-log-the-used-ssl-tls-protocol-and-ciphersuite" class="question-hyperlink">How can I let nginx log the used SSL/TLS protocol and ciphersuite?</a></h1>
+
+                <div class="ml12 aside-cta flex--item sm:ml0 sm:mb12 sm:order-first d-flex jc-end">
+
+                        <div class="ml12 aside-cta flex--item print:d-none">
+                                <a href="/questions/ask" class="ws-nowrap s-btn s-btn__filled">
+        Ask Question
+    </a>
+
+                        </div>
+                </div>
+            </div>
+            <div class="d-flex fw-wrap pb8 mb16 bb bc-black-200">
+                    <div class="flex--item ws-nowrap mr16 mb8" title="2014-08-13 11:57:40Z">
+                        <span class="fc-black-400 mr2">Asked</span>
+                        <time itemprop="dateCreated" datetime="2014-08-13 11:57:40Z">11 years ago</time>
+                    </div>
+                    <div class="flex--item ws-nowrap mr16 mb8">
+                        <span class="fc-black-400 mr2">Modified</span>
+                        <a href="?lastactivity" class="s-link s-link__inherit" title="2014-08-13 15:11:33Z">11 years ago</a>
+                    </div>
+                    <div class="flex--item ws-nowrap mb8" title="Viewed 50,568 times">
+                        <span class="fc-black-400 mr2">Viewed</span>
+                        51k times
+                    </div>
+            </div>
+
+
+
+            <div id="mainbar" role="main" aria-label="question and answers">
+                
+<div class="question js-question" data-questionid="620123" data-position-on-page="0" data-score="35" data-author-reputation="3674"  id="question">
+    <style>
+    </style>
+<div class="js-zone-container zone-container-main">
+    <div id="dfp-tlb" class="everyonelovesstackoverflow everyoneloves__top-leaderboard everyoneloves__leaderboard"></div>
+		<div class="js-report-ad-button-container " style="width: 728px"></div>
+</div>
+
+    <div class="post-layout ">
+        <div class="votecell post-layout--left">
+            
+<div class="js-voting-container d-flex jc-center fd-column ai-center gs4 fc-black-300" data-post-id="620123" data-referrer="None">
+        <button class="js-vote-up-btn flex--item s-btn s-btn__muted s-btn__outlined bar-pill bc-black-225 f:bc-theme-secondary-400 f:bg-theme-secondary-400 f:fc-black-050 h:bg-theme-primary-200"
+                id="upvote-btn-620123"
+                data-controller="s-tooltip"
+                data-s-tooltip-placement="right"
+                title="This question shows research effort; it is useful and clear"
+                aria-pressed="false"
+                aria-label="Up vote"
+                data-selected-classes="fc-theme-primary-100 bc-theme-primary-500 bg-theme-primary-500"
+                data-unselected-classes="bc-black-225 f:bc-theme-secondary-400 f:bg-theme-secondary-400 f:fc-black-050 h:bg-theme-primary-200">
+            <svg aria-hidden="true" class="svg-icon iconArrowUp" width="18" height="18"  viewBox="0 0 18 18"><path  d="M1 12h16L9 4z"/></svg>
+        </button>
+        <input type="hidden" id="voteUpHash" value="68:3:31e,16:9fdf3775c7db1532,10:1755248972,16:c72bd32ec97d38c6,6:620123,cf027b08e9d974c98b16f3ff60d18657a9005e080900ca2daaa09a0c32279a98" />
+        <div class="js-vote-count flex--item d-flex fd-column ai-center fc-theme-body-font fw-bold fs-subheading py4"
+             itemprop="upvoteCount"
+             data-value="35">
+35        </div>
+        <button
+                class="js-vote-down-btn js-vote-down-question flex--item mb8 s-btn s-btn__muted s-btn__outlined bar-pill bc-black-225 f:bc-theme-secondary-400 f:bg-theme-secondary-400 f:fc-black-050 h:bg-theme-primary-200"
+				id=downvote-btn-620123
+                title="This question does not show any research effort; it is unclear or not useful"
+                aria-pressed="false"
+                aria-label="Down vote"
+                data-selected-classes="fc-theme-primary-100 bc-theme-primary-500 bg-theme-primary-500"
+                data-unselected-classes="bc-black-225 f:bc-theme-secondary-400 f:bg-theme-secondary-400 f:fc-black-050 h:bg-theme-primary-200">
+            <svg aria-hidden="true" class="svg-icon iconArrowDown" width="18" height="18"  viewBox="0 0 18 18"><path  d="M1 6h16l-8 8z"/></svg>
+        </button>
+        <input type="hidden" id="voteDownHash" value="68:3:31e,16:d5da8c1686e33262,10:1755248972,16:6b3e4c90aca4edef,6:620123,ed9f0809a5f92d921f07be332b42657e35b937ea86e79324aa335e7306a95d7c" />
+
+
+        
+<button class="js-saves-btn s-btn s-btn__unset c-pointer py4"
+        type="button"
+        id="saves-btn-620123"
+        data-controller="s-tooltip"
+        data-s-tooltip-placement="right"
+        data-s-popover-placement=""
+        title="Save this question."
+        data-is-saved="false"
+        aria-label="Save"
+        data-post-id="620123"
+        data-post-type-id="1"
+        data-user-privilege-for-post-click="0"
+        aria-controls=""
+        data-s-popover-auto-show="false"
+>
+    <svg aria-hidden="true" class="fc-theme-primary-400 js-saves-btn-selected d-none svg-icon iconBookmark" width="18" height="18"  viewBox="0 0 18 18"><path  d="M3 17V3c0-1.1.9-2 2-2h8a2 2 0 0 1 2 2v14l-6-4z"/></svg>
+    <svg aria-hidden="true" class="js-saves-btn-unselected svg-icon iconBookmarkAlt" width="18" height="18"  viewBox="0 0 18 18"><path  d="m9 10.6 4 2.66V3H5v10.26zM3 17V3c0-1.1.9-2 2-2h8a2 2 0 0 1 2 2v14l-6-4z"/></svg>
+</button>
+
+
+
+
+
+
+
+
+    
+    <a class="js-post-issue flex--item s-btn s-btn__unset c-pointer py6 mx-auto" href="/posts/620123/timeline" data-shortcut="T" data-ks-title="timeline" data-controller="s-tooltip" data-s-tooltip-placement="right" title="Show activity on this post." aria-label="Timeline"><svg aria-hidden="true" class="mln2 mr0 svg-icon iconHistory" width="19" height="18"  viewBox="0 0 19 18"><path  d="M3 9a8 8 0 1 1 3.73 6.77L8.2 14.3A6 6 0 1 0 5 9l3.01-.01-4 4-4-4zm7-4h1.01L11 9.36l3.22 2.1-.6.93L10 10z"/></svg></a>
+
+</div>
+
+        </div>
+
+        
+
+<div class="postcell post-layout--right">
+    
+    <div class="s-prose js-post-body" itemprop="text">
+                
+<p>My goal is to ensure proper security for clients connecting to my nginx. I'm following <a href="https://wiki.mozilla.org/Security/Server_Side_TLS" rel="noreferrer">Mozilla's guide to configure TLS properly</a> on my nginx installation, but I don't have an overview of the actual protocols/ciphersuites being used in practice.</p>
+
+<p>What I have now:</p>
+
+<pre><code>server {
+    listen 443;
+    ssl on;
+    ssl_certificate /path/to/signed_cert_plus_intermediates;
+    ssl_certificate_key /path/to/private_key;
+    ssl_dhparam /path/to/dhparam.pem;
+    ssl_session_timeout 5m;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers 'the_long_ciphersuite_listed_there';
+    ssl_prefer_server_ciphers on;
+    ssl_session_cache shared:SSL:50m;
+}
+</code></pre>
+
+<p>With this, I'd like to log which SSL protocol was used for a connection and what ciphersuite was chosen after the client/server negotiated. E.g.:</p>
+
+<pre><code>10.1.2.3 - - [13/Aug/2014:12:34:56 +0200] "GET / HTTP/1.1" 200 1234 "-" "User agent bla"
+</code></pre>
+
+<p>to</p>
+
+<pre><code>10.1.2.3 - - [13/Aug/2014:12:34:56 +0200] ECDHE-RSA-AES128-GCM-SHA256 TLSv1.2 "GET / HTTP/1.1" 200 1234 "-" "User agent bla"
+</code></pre>
+
+<p>This way I can quickly identify clients which are using outdated browsers or automated machines which do not support PFS or other relevant security enabling technologies.</p>
+
+<p>How do I configure nginx to log this information?</p>
+    </div>
+
+        <div class="mt24 mb12">
+            <div class="post-taglist d-flex gs4 gsy fd-column">
+                <div class="d-flex ps-relative fw-wrap">
+                    
+                    <ul class='ml0 list-ls-none js-post-tag-list-wrapper d-inline'><li class='d-inline mr4 js-post-tag-list-item'><a href="/questions/tagged/nginx" class="s-tag post-tag" title="show questions tagged &#39;nginx&#39;" aria-label="show questions tagged &#39;nginx&#39;" rel="tag" aria-labelledby="tag-nginx-tooltip-container" data-tag-menu-origin="Unknown">nginx</a></li><li class='d-inline mr4 js-post-tag-list-item'><a href="/questions/tagged/security" class="s-tag post-tag" title="show questions tagged &#39;security&#39;" aria-label="show questions tagged &#39;security&#39;" rel="tag" aria-labelledby="tag-security-tooltip-container" data-tag-menu-origin="Unknown">security</a></li><li class='d-inline mr4 js-post-tag-list-item'><a href="/questions/tagged/logging" class="s-tag post-tag" title="show questions tagged &#39;logging&#39;" aria-label="show questions tagged &#39;logging&#39;" rel="tag" aria-labelledby="tag-logging-tooltip-container" data-tag-menu-origin="Unknown">logging</a></li><li class='d-inline mr4 js-post-tag-list-item'><a href="/questions/tagged/tls" class="s-tag post-tag" title="show questions tagged &#39;tls&#39;" aria-label="show questions tagged &#39;tls&#39;" rel="tag" aria-labelledby="tag-tls-tooltip-container" data-tag-menu-origin="Unknown">tls</a></li><li class='d-inline mr4 js-post-tag-list-item'><a href="/questions/tagged/ssl" class="s-tag post-tag" title="show questions tagged &#39;ssl&#39;" aria-label="show questions tagged &#39;ssl&#39;" rel="tag" aria-labelledby="tag-ssl-tooltip-container" data-tag-menu-origin="Unknown">ssl</a></li></ul>
+                </div>
+            </div>
+        </div>
+
+    <div class="mb0 ">
+        <div class="mt16 d-flex gs8 gsy fw-wrap jc-end ai-start pt4 mb16">
+            <div class="flex--item mr16 fl1 w96">
+                
+
+
+<div class="js-post-menu pt2" data-post-id="620123" data-post-type-id="1">
+
+    <div class="d-flex gs8 s-anchors s-anchors__muted fw-wrap">
+
+        <div class="flex--item">
+            <a href="/q/620123"
+               rel="nofollow"
+               itemprop="url"
+               class="js-share-link js-gps-track"
+               title="Short permalink to this question"
+               data-gps-track="post.click({ item: 2, priv: 0, post_type: 1 })"
+               data-controller="se-share-sheet"
+               data-se-share-sheet-title="Share a link to this question"
+               data-se-share-sheet-subtitle=""
+               data-se-share-sheet-post-type="question"
+               data-se-share-sheet-social="facebook twitter "
+               data-se-share-sheet-location="1"
+               data-se-share-sheet-license-url="https%3a%2f%2fcreativecommons.org%2flicenses%2fby-sa%2f3.0%2f"
+               data-se-share-sheet-license-name="CC BY-SA 3.0"
+               data-s-popover-placement="bottom-start">Share</a>
+        </div>
+
+
+                    <div class="flex--item">
+                        <a href="/posts/620123/edit" class="js-suggest-edit-post js-gps-track" data-gps-track="post.click({ item: 6, priv: 0, post_type: 1 })" title="">Improve this question</a>
+                    </div>
+
+                <div class="flex--item">
+                    <button type="button"
+                            id="btnFollowPost-620123" class="s-btn s-btn__link js-follow-post js-follow-question js-gps-track"
+                            data-gps-track="post.click({ item: 14, priv: 0, post_type: 1 })"
+                            data-controller="s-tooltip " data-s-tooltip-placement="bottom"
+                            data-s-popover-placement="bottom" aria-controls=""
+                            title="Follow this question to receive notifications">
+                        Follow
+                        <input type="hidden" id="voteFollowHash" value="68:3:31e,16:2f7fed74594c807d,10:1755248972,16:5a19138cc228e71a,6:620123,f1b26f9384dcccfa91a67bc7f4f9ab1b7dc8965621c9a411335879b515320739" />
+                    </button>
+                </div>
+
+
+
+
+
+
+    </div>
+    <div class="js-menu-popup-container"></div>
+</div>
+            </div>
+
+            <div class="post-signature owner flex--item">
+                <div class="user-info user-hover ">
+    <div class="d-flex ">
+        <div class="user-action-time fl-grow1">
+            asked <span title='2014-08-13 11:57:40Z' class='relativetime'>Aug 13, 2014 at 11:57</span>
+        </div>
+        
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/135437/gertvdijk"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/64f1a286bd174de3b0b3d2d056a7793e?s=64&amp;d=identicon&amp;r=PG" alt="gertvdijk&#39;s user avatar" width="32" height="32" class="bar-sm"></div></a>
+    </div>
+    <div class="user-details" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <a href="/users/135437/gertvdijk" itemprop="url" dir="auto">gertvdijk</a><span class="d-none" itemprop="name">gertvdijk</span>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">3,674</span><span title="6 gold badges" aria-hidden="true"><span class="badge1"></span><span class="badgecount">6</span></span><span class="v-visible-sr">6 gold badges</span><span title="32 silver badges" aria-hidden="true"><span class="badge2"></span><span class="badgecount">32</span></span><span class="v-visible-sr">32 silver badges</span><span title="51 bronze badges" aria-hidden="true"><span class="badge3"></span><span class="badgecount">51</span></span><span class="v-visible-sr">51 bronze badges</span>
+        </div>
+    </div>
+</div>
+
+
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
+
+
+            
+
+<span class="d-none" itemprop="commentCount"></span>
+	<div class="post-layout--right js-post-comments-component" data-has-opted-out="False">
+        <div id="comments-620123" class="comments js-comments-container bt bc-black-200 mt12  dno" data-post-id="620123" data-min-length="15">
+            <ul class="comments-list js-comments-list"
+                    data-remaining-comments-count="0"
+                    data-canpost="false"
+                    data-cansee="true"
+                    data-comments-unavailable="false"
+                    data-addlink-disabled="true">
+
+            </ul>
+	    </div>
+
+        <div id="comments-link-620123" data-rep=50 data-anon=true>
+                    <a
+                        class="js-add-link comments-link disabled-link"
+                        title="Use comments to ask for more information or suggest improvements. Avoid answering questions in comments."
+                        
+                        href="#"
+                        role="button"
+                        data-show-first-time-commenting="False">
+                        Add a comment
+                    </a>
+                <span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a
+                class="js-show-link comments-link dno"
+                title="Expand to show all comments on this post"
+                href=#
+                onclick=""
+                role="button">
+                
+            </a>
+        </div>         
+    </div>
+
+    </div>
+
+</div>
+
+
+
+                
+                <div id="answers">
+                    <a name="tab-top"></a>
+                    <div id="answers-header">
+                        <div class="answers-subheader d-flex ai-center mb8">
+                            <div class="flex--item fl1">
+                                <h2 class="mb0" data-answercount="1">
+                                        1 Answer
+                                    <span style="display:none;" itemprop="answerCount">1</span>
+                                </h2>
+                            </div>
+                            <div class="flex--item">
+                                
+
+<div class="d-flex g4 gsx ai-center sm:fd-column sm:ai-start">
+    <div class="d-flex fd-column ai-end sm:ai-start">
+        <label class="flex--item fs-caption" for="answer-sort-dropdown-select-menu">
+            Sorted by:
+        </label>
+        <a 
+            class="js-sort-preference-change s-link flex--item fs-fine d-none"
+            data-value="ScoreDesc"
+            href="/questions/620123/how-can-i-let-nginx-log-the-used-ssl-tls-protocol-and-ciphersuite?answertab=scoredesc#tab-top"
+        >
+            Reset to default
+        </a>
+    </div>
+    <div class="flex--item s-select">
+        <select id="answer-sort-dropdown-select-menu">
+                    <option
+                        value=scoredesc
+                        selected=selected
+                    >
+                        Highest score (default)
+                    </option>
+                    <option
+                        value=modifieddesc
+                    >
+                        Date modified (newest first)
+                    </option>
+                    <option
+                        value=createdasc
+                    >
+                        Date created (oldest first)
+                    </option>
+        </select>
+    </div>
+</div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                                        
+<a name="620130"></a>
+<div id="answer-620130" class="answer js-answer accepted-answer js-accepted-answer" data-answerid="620130" data-parentid="620123" data-score="66" data-position-on-page="1" data-highest-scored="1" data-question-has-accepted-highest-score="1" data-author-reputation="777"  itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+        <div class="post-layout ">
+                <div class="votecell post-layout--left">
+                    
+<div class="js-voting-container d-flex jc-center fd-column ai-center gs4 fc-black-300" data-post-id="620130" data-referrer="None">
+        <button class="js-vote-up-btn flex--item s-btn s-btn__muted s-btn__outlined bar-pill bc-black-225 f:bc-theme-secondary-400 f:bg-theme-secondary-400 f:fc-black-050 h:bg-theme-primary-200"
+                id="upvote-btn-620130"
+                data-controller="s-tooltip"
+                data-s-tooltip-placement="right"
+                title="This answer is useful"
+                aria-pressed="false"
+                aria-label="Up vote"
+                data-selected-classes="fc-theme-primary-100 bc-theme-primary-500 bg-theme-primary-500"
+                data-unselected-classes="bc-black-225 f:bc-theme-secondary-400 f:bg-theme-secondary-400 f:fc-black-050 h:bg-theme-primary-200">
+            <svg aria-hidden="true" class="svg-icon iconArrowUp" width="18" height="18"  viewBox="0 0 18 18"><path  d="M1 12h16L9 4z"/></svg>
+        </button>
+        <input type="hidden" id="voteUpHash" value="68:3:31e,16:fb64dabd85cd6a1f,10:1755248972,16:8361dfc16f1782de,6:620130,76df1d14d30d1c47725c510d6a28e5529f368f56c992393af43995597ce6f14b" />
+        <div class="js-vote-count flex--item d-flex fd-column ai-center fc-theme-body-font fw-bold fs-subheading py4"
+             itemprop="upvoteCount"
+             data-value="66">
+66        </div>
+        <button
+                class="js-vote-down-btn flex--item mb8 s-btn s-btn__muted s-btn__outlined bar-pill bc-black-225 f:bc-theme-secondary-400 f:bg-theme-secondary-400 f:fc-black-050 h:bg-theme-primary-200"
+				id=downvote-btn-620130
+                title="This answer is not useful"
+                aria-pressed="false"
+                aria-label="Down vote"
+                data-selected-classes="fc-theme-primary-100 bc-theme-primary-500 bg-theme-primary-500"
+                data-unselected-classes="bc-black-225 f:bc-theme-secondary-400 f:bg-theme-secondary-400 f:fc-black-050 h:bg-theme-primary-200">
+            <svg aria-hidden="true" class="svg-icon iconArrowDown" width="18" height="18"  viewBox="0 0 18 18"><path  d="M1 6h16l-8 8z"/></svg>
+        </button>
+        <input type="hidden" id="voteDownHash" value="68:3:31e,16:817e9d16997837f2,10:1755248972,16:1ab80e23d36b8008,6:620130,5e3f30161aa1fbc19643c5ea7dab8d447c77e82f0e7eb0474f583a52453d9a58" />
+
+
+        
+<button class="js-saves-btn s-btn s-btn__unset c-pointer py4"
+        type="button"
+        id="saves-btn-620130"
+        data-controller="s-tooltip"
+        data-s-tooltip-placement="right"
+        data-s-popover-placement=""
+        title="Save this answer."
+        data-is-saved="false"
+        aria-label="Save"
+        data-post-id="620130"
+        data-post-type-id="2"
+        data-user-privilege-for-post-click="0"
+        aria-controls=""
+        data-s-popover-auto-show="false"
+>
+    <svg aria-hidden="true" class="fc-theme-primary-400 js-saves-btn-selected d-none svg-icon iconBookmark" width="18" height="18"  viewBox="0 0 18 18"><path  d="M3 17V3c0-1.1.9-2 2-2h8a2 2 0 0 1 2 2v14l-6-4z"/></svg>
+    <svg aria-hidden="true" class="js-saves-btn-unselected svg-icon iconBookmarkAlt" width="18" height="18"  viewBox="0 0 18 18"><path  d="m9 10.6 4 2.66V3H5v10.26zM3 17V3c0-1.1.9-2 2-2h8a2 2 0 0 1 2 2v14l-6-4z"/></svg>
+</button>
+
+
+
+
+
+
+
+            <div class="js-accepted-answer-indicator flex--item fc-green-400 py6 mtn8" data-s-tooltip-placement="right" title="Loading when this answer was accepted&#x2026;" tabindex="0" role="note" aria-label="Accepted">
+                <div class="ta-center">
+                    <svg aria-hidden="true" class="svg-icon iconCheckmarkLg" width="36" height="36"  viewBox="0 0 36 36"><path  d="m6 14 8 8L30 6v8L14 30l-8-8z"/></svg>
+                </div>
+            </div>
+
+    
+    <a class="js-post-issue flex--item s-btn s-btn__unset c-pointer py6 mx-auto" href="/posts/620130/timeline" data-shortcut="T" data-ks-title="timeline" data-controller="s-tooltip" data-s-tooltip-placement="right" title="Show activity on this post." aria-label="Timeline"><svg aria-hidden="true" class="mln2 mr0 svg-icon iconHistory" width="19" height="18"  viewBox="0 0 19 18"><path  d="M3 9a8 8 0 1 1 3.73 6.77L8.2 14.3A6 6 0 1 0 5 9l3.01-.01-4 4-4-4zm7-4h1.01L11 9.36l3.22 2.1-.6.93L10 10z"/></svg></a>
+
+</div>
+
+                </div>
+
+            
+
+<div class="answercell post-layout--right">
+    
+    <div class="s-prose js-post-body" itemprop="text">
+<p>Add <code>$ssl_cipher</code> to your <code>log_format</code> configuration.</p>
+
+<p>Refer to <a href="http://nginx.org/en/docs/http/ngx_http_ssl_module.html#variables" rel="noreferrer">http://nginx.org/en/docs/http/ngx_http_ssl_module.html#variables</a> for all SSL-related variables.</p>
+
+<h2>Example</h2>
+
+<p>Define a custom <code>log_format</code> in the <code>http</code> context (e.g. <code>/etc/nginx/nginx.conf</code>):</p>
+
+<pre><code>log_format combined_ssl '$remote_addr - $remote_user [$time_local] '
+                        '$ssl_protocol/$ssl_cipher '
+                        '"$request" $status $body_bytes_sent '
+                        '"$http_referer" "$http_user_agent"';
+</code></pre>
+
+<p>The above is based on the default <code>combined</code> format with an additional <code>'$ssl_protocol/$ssl_cipher '</code> line.</p>
+
+<p>Then add in a <code>server</code> context (with SSL enabled) the <code>access_log</code> directive with the custom log format:</p>
+
+<pre><code>server {
+  listen 443;
+  ssl on;
+  access_log /var/log/nginx/access.log combined_ssl;
+  [...]
+}
+</code></pre>
+
+<p>After restarting nginx, logs appear like:</p>
+
+<pre><code>10.1.2.3 - - [13/Aug/2014:12:34:56 +0200] TLSv1.2/ECDHE-RSA-AES128-GCM-SHA256 "GET / HTTP/1.1" 200 1234 "-" "User agent bla"
+</code></pre>
+    </div>
+    <div class="mt24">
+        <div class="d-flex fw-wrap ai-start jc-end gs8 gsy">
+            <time itemprop="dateCreated" datetime="2014-08-13 12:43:47Z"></time>
+            <div class="flex--item mr16" style="flex: 1 1 100px;">
+                
+
+
+<div class="js-post-menu pt2" data-post-id="620130" data-post-type-id="2">
+
+    <div class="d-flex gs8 s-anchors s-anchors__muted fw-wrap">
+
+        <div class="flex--item">
+            <a href="/a/620130"
+               rel="nofollow"
+               itemprop="url"
+               class="js-share-link js-gps-track"
+               title="Short permalink to this answer"
+               data-gps-track="post.click({ item: 2, priv: 0, post_type: 2 })"
+               data-controller="se-share-sheet"
+               data-se-share-sheet-title="Share a link to this answer"
+               data-se-share-sheet-subtitle=""
+               data-se-share-sheet-post-type="answer"
+               data-se-share-sheet-social="facebook twitter "
+               data-se-share-sheet-location="2"
+               data-se-share-sheet-license-url="https%3a%2f%2fcreativecommons.org%2flicenses%2fby-sa%2f3.0%2f"
+               data-se-share-sheet-license-name="CC BY-SA 3.0"
+               data-s-popover-placement="bottom-start">Share</a>
+        </div>
+
+
+                    <div class="flex--item">
+                        <a href="/posts/620130/edit" class="js-suggest-edit-post js-gps-track" data-gps-track="post.click({ item: 6, priv: 0, post_type: 2 })" title="">Improve this answer</a>
+                    </div>
+
+                <div class="flex--item">
+                    <button type="button"
+                            id="btnFollowPost-620130" class="s-btn s-btn__link js-follow-post js-follow-answer js-gps-track"
+                            data-gps-track="post.click({ item: 14, priv: 0, post_type: 2 })"
+                            data-controller="s-tooltip " data-s-tooltip-placement="bottom"
+                            data-s-popover-placement="bottom" aria-controls=""
+                            title="Follow this answer to receive notifications">
+                        Follow
+                        <input type="hidden" id="voteFollowHash" value="68:3:31e,16:243c242ee1c3dadc,10:1755248972,16:b7b1ea0ab8158e2d,6:620130,3c6e24cfeb147dea650dc18d5666a5a81f91b43a92cd98f48b5db5f04abc6fe3" />
+                    </button>
+                </div>
+
+
+
+
+
+
+    </div>
+    <div class="js-menu-popup-container"></div>
+</div>
+            </div>
+            <div class="post-signature flex--item fl0">
+<div class="user-info user-hover ">
+    <div class="d-flex ">
+        <div class="user-action-time fl-grow1">
+            <a href="/posts/620130/revisions" title="show all edits to this post"
+                         class="js-gps-track"
+                         data-gps-track="post.click({ item: 4, priv: 0, post_type: 2 })">edited <span title='2014-08-13 15:11:33Z' class='relativetime'>Aug 13, 2014 at 15:11</span></a>
+        </div>
+        
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/135437/gertvdijk"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/64f1a286bd174de3b0b3d2d056a7793e?s=64&amp;d=identicon&amp;r=PG" alt="gertvdijk&#39;s user avatar" width="32" height="32" class="bar-sm"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/135437/gertvdijk" dir="auto">gertvdijk</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">3,674</span><span title="6 gold badges" aria-hidden="true"><span class="badge1"></span><span class="badgecount">6</span></span><span class="v-visible-sr">6 gold badges</span><span title="32 silver badges" aria-hidden="true"><span class="badge2"></span><span class="badgecount">32</span></span><span class="v-visible-sr">32 silver badges</span><span title="51 bronze badges" aria-hidden="true"><span class="badge3"></span><span class="badgecount">51</span></span><span class="v-visible-sr">51 bronze badges</span>
+        </div>
+    </div>
+</div>
+            </div>
+
+
+            <div class="post-signature flex--item fl0">
+                <div class="user-info user-hover ">
+    <div class="d-flex ">
+        <div class="user-action-time fl-grow1">
+            answered <span title='2014-08-13 12:43:47Z' class='relativetime'>Aug 13, 2014 at 12:43</span>
+        </div>
+        
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/89238/praseodym"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/806491dbf7db5564163089118e1ca319?s=64&amp;d=identicon&amp;r=PG" alt="praseodym&#39;s user avatar" width="32" height="32" class="bar-sm"></div></a>
+    </div>
+    <div class="user-details" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <a href="/users/89238/praseodym" itemprop="url" dir="auto">praseodym</a><span class="d-none" itemprop="name">praseodym</span>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">777</span><span title="6 silver badges" aria-hidden="true"><span class="badge2"></span><span class="badgecount">6</span></span><span class="v-visible-sr">6 silver badges</span><span title="7 bronze badges" aria-hidden="true"><span class="badge3"></span><span class="badgecount">7</span></span><span class="v-visible-sr">7 bronze badges</span>
+        </div>
+    </div>
+</div>
+
+
+            </div>
+        </div>
+        
+    
+    </div>
+    
+</div>
+
+
+
+
+                
+
+<span class="d-none" itemprop="commentCount"></span>
+	<div class="post-layout--right js-post-comments-component" data-has-opted-out="False">
+        <div id="comments-620130" class="comments js-comments-container bt bc-black-200 mt12  dno" data-post-id="620130" data-min-length="15">
+            <ul class="comments-list js-comments-list"
+                    data-remaining-comments-count="0"
+                    data-canpost="false"
+                    data-cansee="true"
+                    data-comments-unavailable="false"
+                    data-addlink-disabled="true">
+
+            </ul>
+	    </div>
+
+        <div id="comments-link-620130" data-rep=50 data-anon=true>
+                    <a
+                        class="js-add-link comments-link disabled-link"
+                        title="Use comments to ask for more information or suggest improvements. Avoid comments like &#x201C;&#x2B;1&#x201D; or &#x201C;thanks&#x201D;."
+                        
+                        href="#"
+                        role="button"
+                        data-show-first-time-commenting="False">
+                        Add a comment
+                    </a>
+                <span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a
+                class="js-show-link comments-link dno"
+                title="Expand to show all comments on this post"
+                href=#
+                onclick=""
+                role="button">
+                
+            </a>
+        </div>         
+    </div>
+
+        </div>
+</div>
+                                <h2 class="js-bottom-notice bottom-notice">
+                                    You must <a href="/users/login?ssrc=question_page&amp;returnurl=https%3a%2f%2fserverfault.com%2fquestions%2f620123">log in</a> to answer this question.
+                                </h2>
+
+
+
+
+                            <div class="js-bottom-notice d-flex w100 md:mb12 md:fd-column ac-stretch" data-loc="1">
+                                <div class="flex--item ba bc-black-200 bar-md p24 md:p16 mr12 md:mb12 md:mr0 w50 md:w100">
+                                    <div class="d-flex fd-column">
+                                        <p class="flex--item fs-body2 fw-bold fc-black-500 mb8">Start asking to get answers</p>
+                                        <p class="flex--item fs-body1 fc-black-400 mb16">Find the answer to your question by asking.</p>
+                                        <a class="flex--item s-btn s-btn__outlined as-start px32 md:px16" href="/questions/ask" >Ask question</a>
+                                    </div>
+                                </div>
+                                <div class="flex--item ba bc-black-200 bar-md p24 md:p16 w50 md:w100">
+                                    <div class="d-flex fd-column gsy g16">
+                                        <p class="flex--item fs-body2 fw-bold fc-black-500 mb0">Explore related questions</p>
+                                        <div class="flex--item mb0"><ul class='ml0 list-ls-none js-post-tag-list-wrapper d-inline'><li class='d-inline mr4 js-post-tag-list-item'><a href="/questions/tagged/nginx" class="s-tag post-tag" title="show questions tagged &#39;nginx&#39;" aria-label="show questions tagged &#39;nginx&#39;" rel="tag" aria-labelledby="tag-nginx-tooltip-container" data-tag-menu-origin="Unknown">nginx</a></li><li class='d-inline mr4 js-post-tag-list-item'><a href="/questions/tagged/security" class="s-tag post-tag" title="show questions tagged &#39;security&#39;" aria-label="show questions tagged &#39;security&#39;" rel="tag" aria-labelledby="tag-security-tooltip-container" data-tag-menu-origin="Unknown">security</a></li><li class='d-inline mr4 js-post-tag-list-item'><a href="/questions/tagged/logging" class="s-tag post-tag" title="show questions tagged &#39;logging&#39;" aria-label="show questions tagged &#39;logging&#39;" rel="tag" aria-labelledby="tag-logging-tooltip-container" data-tag-menu-origin="Unknown">logging</a></li><li class='d-inline mr4 js-post-tag-list-item'><a href="/questions/tagged/tls" class="s-tag post-tag" title="show questions tagged &#39;tls&#39;" aria-label="show questions tagged &#39;tls&#39;" rel="tag" aria-labelledby="tag-tls-tooltip-container" data-tag-menu-origin="Unknown">tls</a></li><li class='d-inline mr4 js-post-tag-list-item'><a href="/questions/tagged/ssl" class="s-tag post-tag" title="show questions tagged &#39;ssl&#39;" aria-label="show questions tagged &#39;ssl&#39;" rel="tag" aria-labelledby="tag-ssl-tooltip-container" data-tag-menu-origin="Unknown">ssl</a></li></ul></div>
+                                        <p class="flex--item fs-body1 fc-black-400 mb0">See similar questions with these tags.</p>
+                                    </div>
+                                </div>
+                            </div>
+                </div>
+            </div>
+
+            
+<div id="sidebar" class="show-votes" role="complementary" aria-label="sidebar">
+        
+
+    
+    <div class="s-sidebarwidget s-sidebarwidget__yellow s-anchors s-anchors__grayscale mb16" data-tracker="cb=1">
+            <ul class="s-sidebarwidget--content s-sidebarwidget__items p0">
+                        <li class="s-sidebarwidget--header">
+                            The Overflow Blog
+                        </li>
+        <li class="s-sidebarwidget--item d-flex px16">
+            <div class="flex--item1 fl-shrink0">
+<svg aria-hidden="true" class="va-text-top svg-icon iconPencilSm" width="14" height="14"  viewBox="0 0 14 14"><path fill="#F1B600" d="m2 10.12 6.37-6.43 1.88 1.88L3.88 12H2z"/><path fill="#E87C87" d="m11.1 1.71 1.13 1.12c.2.2.2.51 0 .71L11.1 4.7 9.21 2.86l1.17-1.15c.2-.2.51-.2.71 0"/></svg>            </div>
+            <div class="flex--item wmn0 ow-break-word">
+                <a href="https://stackoverflow.blog/2025/08/12/ai-isn-t-stealing-your-job-it-s-helping-you-find-it/" class="js-gps-track" data-ga="[&quot;community bulletin board&quot;,&quot;The Overflow Blog&quot;,&quot;https://stackoverflow.blog/2025/08/12/ai-isn-t-stealing-your-job-it-s-helping-you-find-it/&quot;,null,null]" data-gps-track="communitybulletin.click({ priority: 1, position: 0, location: questionpage })">AI isn’t stealing your job, it’s helping you find it</a>
+            </div>
+        </li>
+        <li class="s-sidebarwidget--item d-flex px16">
+            <div class="flex--item1 fl-shrink0">
+<svg aria-hidden="true" class="va-text-top svg-icon iconPencilSm" width="14" height="14"  viewBox="0 0 14 14"><path fill="#F1B600" d="m2 10.12 6.37-6.43 1.88 1.88L3.88 12H2z"/><path fill="#E87C87" d="m11.1 1.71 1.13 1.12c.2.2.2.51 0 .71L11.1 4.7 9.21 2.86l1.17-1.15c.2-.2.51-.2.71 0"/></svg>            </div>
+            <div class="flex--item wmn0 ow-break-word">
+                <a href="https://stackoverflow.blog/2025/08/15/the-future-of-vue-is-you-and-you/" class="js-gps-track" data-ga="[&quot;community bulletin board&quot;,&quot;The Overflow Blog&quot;,&quot;https://stackoverflow.blog/2025/08/15/the-future-of-vue-is-you-and-you/&quot;,null,null]" data-gps-track="communitybulletin.click({ priority: 1, position: 1, location: questionpage })">The future of Vue is you (and You)</a>
+            </div>
+        </li>
+                        <li class="s-sidebarwidget--header">
+                            Featured on Meta
+                        </li>
+        <li class="s-sidebarwidget--item d-flex px16">
+            <div class="flex--item1 fl-shrink0">
+<div class="favicon favicon-stackexchangemeta" title="Meta Stack Exchange"></div>            </div>
+            <div class="flex--item wmn0 ow-break-word">
+                <a href="https://meta.stackexchange.com/questions/411312/will-you-help-build-our-new-visual-identity" class="js-gps-track" data-ga="[&quot;community bulletin board&quot;,&quot;Featured on Meta&quot;,&quot;https://meta.stackexchange.com/questions/411312/will-you-help-build-our-new-visual-identity&quot;,null,null]" data-gps-track="communitybulletin.click({ priority: 3, position: 2, location: questionpage })">Will you help build our new visual identity?</a>
+            </div>
+        </li>
+        <li class="s-sidebarwidget--item d-flex px16">
+            <div class="flex--item1 fl-shrink0">
+<div class="favicon favicon-stackexchangemeta" title="Meta Stack Exchange"></div>            </div>
+            <div class="flex--item wmn0 ow-break-word">
+                <a href="https://meta.stackexchange.com/questions/411578/upcoming-initiatives-on-stack-overflow-and-across-the-stack-exchange-network-j" class="js-gps-track" title="Upcoming initiatives on Stack Overflow and across the Stack Exchange network - July 2025" data-ga="[&quot;community bulletin board&quot;,&quot;Featured on Meta&quot;,&quot;https://meta.stackexchange.com/questions/411578/upcoming-initiatives-on-stack-overflow-and-across-the-stack-exchange-network-j&quot;,null,null]" data-gps-track="communitybulletin.click({ priority: 3, position: 3, location: questionpage })">Upcoming initiatives on Stack Overflow and across the Stack Exchange network...</a>
+            </div>
+        </li>
+        </ul>
+    </div>
+
+
+<div class="js-zone-container zone-container-sidebar">
+    <div id="dfp-tsb" class="everyonelovesstackoverflow everyoneloves__top-sidebar"></div>
+		<div class="js-report-ad-button-container " style="width: 300px"></div>
+</div>
+<div class="js-zone-container zone-container-sidebar">
+    <div id="dfp-msb" class="everyonelovesstackoverflow everyoneloves__mid-sidebar"></div>
+		<div class="js-report-ad-button-container " style="width: 300px"></div>
+</div>
+<div id="hireme"></div>        <div class="module sidebar-linked">
+	<h4 id="h-linked">Linked</h4>
+	    <div class="linked" data-tracker="lq=1">
+            <div class="spacer js-gps-track" data-gps-track="linkedquestion.click({ source_post_id: 620123, target_question_id: 836069, position: 0 })">
+				<a href="/questions/836069/list-output-openssl-ssl-ciphers-by-usage" title="Question score (upvotes - downvotes)">
+					<div class="answer-votes answered-accepted default">1</div>
+				</a>
+				<a href="/questions/836069/list-output-openssl-ssl-ciphers-by-usage?noredirect=1" class="question-hyperlink">List/Output OpenSSL SSL Ciphers by usage?</a>
+			</div>
+	</div>
+</div>
+
+
+    
+
+
+        <div class="module sidebar-related">
+            <h4 id="h-related">Related</h4>
+            <div class="related js-gps-related-questions" data-tracker="rq=1">
+                    <div class="spacer" data-question-id="64484">
+                        <a href="/questions/64484/functional-implications-of-differences-in-ssl-and-tls" title="Question score (upvotes - downvotes)" >
+                            <div class="answer-votes answered-accepted default">32</div>
+                        </a>
+                        <a href="/questions/64484/functional-implications-of-differences-in-ssl-and-tls" class="question-hyperlink">Functional implications of differences in SSL and TLS</a>
+                    </div>
+                    <div class="spacer" data-question-id="67316">
+                        <a href="/questions/67316/in-nginx-how-can-i-rewrite-all-http-requests-to-https-while-maintaining-sub-dom" title="Question score (upvotes - downvotes)" >
+                            <div class="answer-votes answered-accepted large">556</div>
+                        </a>
+                        <a href="/questions/67316/in-nginx-how-can-i-rewrite-all-http-requests-to-https-while-maintaining-sub-dom" class="question-hyperlink">In Nginx, how can I rewrite all http requests to https while maintaining sub-domain?</a>
+                    </div>
+                    <div class="spacer" data-question-id="139728">
+                        <a href="/questions/139728/how-to-download-the-ssl-certificate-from-a-website" title="Question score (upvotes - downvotes)" >
+                            <div class="answer-votes answered-accepted large">288</div>
+                        </a>
+                        <a href="/questions/139728/how-to-download-the-ssl-certificate-from-a-website" class="question-hyperlink">how to download the ssl certificate from a website?</a>
+                    </div>
+                    <div class="spacer" data-question-id="178561">
+                        <a href="/questions/178561/what-are-the-exact-protocol-level-differences-between-ssl-and-tls" title="Question score (upvotes - downvotes)" >
+                            <div class="answer-votes answered-accepted default">41</div>
+                        </a>
+                        <a href="/questions/178561/what-are-the-exact-protocol-level-differences-between-ssl-and-tls" class="question-hyperlink">What are the exact protocol level differences between SSL and TLS?</a>
+                    </div>
+                    <div class="spacer" data-question-id="250476">
+                        <a href="/questions/250476/how-to-force-or-redirect-to-ssl-in-nginx" title="Question score (upvotes - downvotes)" >
+                            <div class="answer-votes answered-accepted large">239</div>
+                        </a>
+                        <a href="/questions/250476/how-to-force-or-redirect-to-ssl-in-nginx" class="question-hyperlink">How to force or redirect to SSL in nginx?</a>
+                    </div>
+                    <div class="spacer" data-question-id="630413">
+                        <a href="/questions/630413/nginx-apache-set-hsts-only-if-x-forwarded-proto-is-https" title="Question score (upvotes - downvotes)" >
+                            <div class="answer-votes answered-accepted default">6</div>
+                        </a>
+                        <a href="/questions/630413/nginx-apache-set-hsts-only-if-x-forwarded-proto-is-https" class="question-hyperlink">Nginx/Apache: set HSTS only if X-Forwarded-Proto is https</a>
+                    </div>
+                    <div class="spacer" data-question-id="662802">
+                        <a href="/questions/662802/nginx-wordpress-ssl-non-www-w3tc-vhost-config-file-questions" title="Question score (upvotes - downvotes)" >
+                            <div class="answer-votes answered-accepted default">4</div>
+                        </a>
+                        <a href="/questions/662802/nginx-wordpress-ssl-non-www-w3tc-vhost-config-file-questions" class="question-hyperlink">NginX + WordPress + SSL + non-www + W3TC vhost config file questions</a>
+                    </div>
+                    <div class="spacer" data-question-id="685702">
+                        <a href="/questions/685702/nginx-how-to-log-tls-error-if-unsupported-ciphers-protocol" title="Question score (upvotes - downvotes)" >
+                            <div class="answer-votes default">4</div>
+                        </a>
+                        <a href="/questions/685702/nginx-how-to-log-tls-error-if-unsupported-ciphers-protocol" class="question-hyperlink">nginx: How to log TLS error (if unsupported ciphers / protocol)</a>
+                    </div>
+                    <div class="spacer" data-question-id="716889">
+                        <a href="/questions/716889/nginx-reverse-proxy-hide-login-query-also-on-301-redirect-or-full-qualified-url" title="Question score (upvotes - downvotes)" >
+                            <div class="answer-votes default">1</div>
+                        </a>
+                        <a href="/questions/716889/nginx-reverse-proxy-hide-login-query-also-on-301-redirect-or-full-qualified-url" class="question-hyperlink">nginx reverse proxy hide login query also on 301 redirect or full qualified url</a>
+                    </div>
+                    <div class="spacer" data-question-id="1150002">
+                        <a href="/questions/1150002/peer-closed-connection-in-ssl-handshake-while-ssl-handshaking-to-upstream" title="Question score (upvotes - downvotes)" >
+                            <div class="answer-votes default">0</div>
+                        </a>
+                        <a href="/questions/1150002/peer-closed-connection-in-ssl-handshake-while-ssl-handshaking-to-upstream" class="question-hyperlink">peer closed connection in SSL handshake while SSL handshaking to upstream</a>
+                    </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+                 $(function() {
+                     $(".js-gps-related-questions .spacer").on("click", function () {
+                        fireRelatedEvent($(this).index() + 1, $(this).data('question-id'));
+                     });
+
+                 function fireRelatedEvent(position, questionId) {
+                     StackExchange.using("gps", function() {
+                         StackExchange.gps.track('related_questions.click',
+                         {
+                             position: position,
+                             originQuestionId: 620123,
+                             relatedQuestionId: +questionId,
+                             location: 'sidebar',
+                             source: 'Baseline'
+                         });    
+                     });
+                 }
+             });
+         </script>
+
+
+    
+    
+
+    <div id="hot-network-questions" class="module tex2jax_ignore">
+    <h4>
+        <a href="https://stackexchange.com/questions?tab=hot"
+           class="js-gps-track s-link s-link__inherit" 
+           data-gps-track="posts_hot_network.click({ item_type:1, location:11 })">
+            Hot Network Questions
+        </a>
+    </h4>
+    <ul>
+            <li >
+                <div class="favicon favicon-superuser" title="Super User"></div><a href="https://superuser.com/questions/1917854/is-there-any-way-to-still-use-manifest-v2-extensions-in-google-chrome-139" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:3 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Is there any way to still use Manifest v2 extensions in Google Chrome 139&#x2B;?
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-cooking" title="Seasoned Advice"></div><a href="https://cooking.stackexchange.com/questions/132960/popping-mustard-seeds-for-a-curry-dish" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:49 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Popping mustard seeds for a curry dish
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-chess" title="Chess Stack Exchange"></div><a href="https://chess.stackexchange.com/questions/47253/why-do-the-rules-allow-resigning-in-drawn-positions-with-insufficient-mating-mat" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:435 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why do the rules allow resigning in drawn positions with insufficient mating material?
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-workplace" title="The Workplace Stack Exchange"></div><a href="https://workplace.stackexchange.com/questions/202418/how-to-work-with-headstrong-colleagues" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:423 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How to work with headstrong colleagues
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-electronics" title="Electrical Engineering Stack Exchange"></div><a href="https://electronics.stackexchange.com/questions/753728/why-do-i-observe-a-sawtooth-like-wave-when-measuring-the-voltage-of-a-li-ion-bat" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:135 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why do I observe a sawtooth-like wave when measuring the voltage of a Li-Ion battery?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-money" title="Personal Finance &amp; Money Stack Exchange"></div><a href="https://money.stackexchange.com/questions/166512/can-etf-shares-be-traded" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:93 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Can ETF shares be traded?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-math" title="Mathematics Stack Exchange"></div><a href="https://math.stackexchange.com/questions/5090140/can-a-pythagorean-triple-have-rational-acute-angles" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:69 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Can a Pythagorean Triple have rational acute angles?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-law" title="Law Stack Exchange"></div><a href="https://law.stackexchange.com/questions/110612/how-often-do-judges-color-their-text" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:617 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How often do judges color their text?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-worldbuilding" title="Worldbuilding Stack Exchange"></div><a href="https://worldbuilding.stackexchange.com/questions/268655/what-does-my-3d-printing-life-seeder-probe-need-to-print-to-populate-the-univers" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:579 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What does my 3D Printing Life-Seeder Probe need to print to populate the Universe for humans?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-philosophy" title="Philosophy Stack Exchange"></div><a href="https://philosophy.stackexchange.com/questions/129617/any-moral-theories-that-are-independent-from-epistemology" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:265 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Any moral theories that are independent from epistemology?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-hermeneutics" title="Biblical Hermeneutics Stack Exchange"></div><a href="https://hermeneutics.stackexchange.com/questions/107568/how-do-scholars-explain-the-term-judgement-in-mtt-522-as-a-one-on-one-settle" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:320 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How do scholars explain the term &#x27; judgement&#x27; in Mtt 5:22 as a one-on-one settlement?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-electronics" title="Electrical Engineering Stack Exchange"></div><a href="https://electronics.stackexchange.com/questions/753768/how-can-i-draw-an-eye-diagram-by-hand" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:135 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How can I draw an eye diagram by hand?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-retrocomputing" title="Retrocomputing Stack Exchange"></div><a href="https://retrocomputing.stackexchange.com/questions/31982/looking-for-very-old-very-bad-rand" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:648 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Looking for very old, very bad rand()
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-mathematica" title="Mathematica Stack Exchange"></div><a href="https://mathematica.stackexchange.com/questions/314953/order-of-variables-in-the-vars-argument-in-reduce-function" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:387 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Order of variables in the vars argument in Reduce function
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-superuser" title="Super User"></div><a href="https://superuser.com/questions/1918215/why-is-it-when-i-m-trying-to-install-zfs-on-debian-trixie-i-get-a-message-that" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:3 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why is it when I&#x2019;m trying to install ZFS on Debian Trixie, I get a message that the release can&#x2019;t be found?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-physics" title="Physics Stack Exchange"></div><a href="https://physics.stackexchange.com/questions/857576/could-momentum-exist-without-energy" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:151 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Could momentum exist without energy?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-security" title="Information Security Stack Exchange"></div><a href="https://security.stackexchange.com/questions/281887/reducing-the-attack-surface-of-my-service-using-reverse-proxy-tls-secured" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:162 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Reducing the attack surface of my service using Reverse proxy (TLS secured)?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-scifi" title="Science Fiction &amp; Fantasy Stack Exchange"></div><a href="https://scifi.stackexchange.com/questions/298708/an-sf-short-story-based-on-no-i-won-t" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:186 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    An SF short story based on &#x201C;No, I won&#x2019;t!&#x201D;
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-money" title="Personal Finance &amp; Money Stack Exchange"></div><a href="https://money.stackexchange.com/questions/166506/what-keeps-an-index-etf-pegged-to-the-index" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:93 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What keeps an index ETF pegged to the index?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-academia" title="Academia Stack Exchange"></div><a href="https://academia.stackexchange.com/questions/220835/sickness-after-admitted-for-masters" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:415 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Sickness after admitted for Masters
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-academia" title="Academia Stack Exchange"></div><a href="https://academia.stackexchange.com/questions/220817/can-high-schoolers-post-to-arxiv-or-write-preprints" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:415 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Can high schoolers post to arXiv or write preprints?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-codegolf" title="Code Golf Stack Exchange"></div><a href="https://codegolf.stackexchange.com/questions/283109/error-detecting-quine" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:200 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Error-Detecting Quine
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-tex" title="TeX - LaTeX Stack Exchange"></div><a href="https://tex.stackexchange.com/questions/749696/drawing-a-3d-vector-field-with-vortices-and-perspective-axis-labels" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:85 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Drawing a 3D vector field with vortices and perspective axis labels
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-codereview" title="Code Review Stack Exchange"></div><a href="https://codereview.stackexchange.com/questions/297904/java-a-fractal-algorithm-shows-prime-number-patterning" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:196 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Java: A fractal algorithm shows prime number patterning
+                </a>
+
+            </li>
+    </ul>
+
+        <a href="#" 
+           class="show-more js-show-more js-gps-track" 
+           data-gps-track="posts_hot_network.click({ item_type:3, location:11 })">
+            more hot questions
+        </a>
+</div>
+
+                <div id="feed-link" class="js-feed-link">
+        <a href="/feeds/question/620123" title="Feed of this question and its answers">
+            <svg aria-hidden="true" class="fc-orange-400 svg-icon iconRss" width="18" height="18"  viewBox="0 0 18 18"><path  d="M3 1a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm0 1.5c6.9 0 12.5 5.6 12.5 12.5H13C13 9.55 8.45 5 3 5zm0 5c4.09 0 7.5 3.41 7.5 7.5H8c0-2.72-2.28-5-5-5zm0 5c1.36 0 2.5 1.14 2.5 2.5H3z"/></svg>
+            Question feed
+        </a>
+    </div>
+    <aside class="s-modal js-feed-link-modal" tabindex="-1" role="dialog" aria-labelledby="feed-modal-title" aria-describedby="feed-modal-description" aria-hidden="true">
+        <div class="s-modal--dialog js-modal-dialog wmx4" role="document"  data-controller="se-draggable">
+            <h1 class="s-modal--header fw-bold js-first-tabbable" id="feed-modal-title" data-se-draggable-target="handle" tabindex="0">
+                Subscribe to RSS
+            </h1>
+            <div class="d-flex gs4 gsy fd-column">
+                <div class="flex--item">
+                    <label class="d-block s-label c-default" for="feed-url">
+                        Question feed
+                        <p class="s-description mt2" id="feed-modal-description">To subscribe to this RSS feed, copy and paste this URL into your RSS reader.</p>
+                    </label>
+                </div>
+                <div class="d-flex ps-relative">
+                    <input class="s-input" type="text" name="feed-url" id="feed-url" readonly="readonly" value="https://serverfault.com/feeds/question/620123" />
+                    <svg aria-hidden="true" class="s-input-icon fc-orange-400 svg-icon iconRss" width="18" height="18"  viewBox="0 0 18 18"><path  d="M3 1a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm0 1.5c6.9 0 12.5 5.6 12.5 12.5H13C13 9.55 8.45 5 3 5zm0 5c4.09 0 7.5 3.41 7.5 7.5H8c0-2.72-2.28-5-5-5zm0 5c1.36 0 2.5 1.14 2.5 2.5H3z"/></svg>
+                </div>
+            </div>
+            <a class="s-modal--close s-btn s-btn__muted js-modal-close js-last-tabbable" href="#" aria-label="Close">
+                <svg aria-hidden="true" class="svg-icon iconClearSm" width="14" height="14"  viewBox="0 0 14 14"><path  d="M12 3.41 10.59 2 7 5.59 3.41 2 2 3.41 5.59 7 2 10.59 3.41 12 7 8.41 10.59 12 12 10.59 8.41 7z"/></svg>
+            </a>
+        </div>
+    </aside>
+
+</div>
+
+    </div>
+<script>StackExchange.ready(function(){$.get('/posts/620123/ivc/9309?prg=4afe0886-b252-4c5a-b340-cc2d8a638b4e');});</script>
+<noscript><div><img src="/posts/620123/ivc/9309?prg=4afe0886-b252-4c5a-b340-cc2d8a638b4e" class="dno" alt="" width="0" height="0"></div></noscript><div style="display:none" id="js-codeblock-lang"></div>    
+    <div id="js-follow-ups-flag-modal"></div>
+</div>
+
+
+
+<script defer src="https://cdn.sstatic.net/Js/questions/show.en.js?v=4bae0d33429f"></script>
+<script type="application/json" data-role="module-args" data-module-name="entry-points/questions/show.mod">{"doMarkObsolete":false,"doTimeOnPage":false,"sendAnswerEditorEventsToAEH":false,"sendAnswerEditorEventsToPrizm":false,"questionId":620123,"sendAuthQuestionVisitToAEH":false,"sendAuthQuestionVisitToPrizm":false,"answerCount":1,"followUpsUIExperimentGroup":"excluded"}</script>
+
+
+
+
+<script defer src="https://cdn.sstatic.net/Js/sprinkles/follow-ups.en.js?v=e5f1e07e3a54"></script><script defer src="https://cdn.sstatic.net/Js/webpack-chunks/svelte.en.js?v=a889db2f4068"></script><script defer src="https://cdn.sstatic.net/Js/webpack-chunks/stacks-svelte.en.js?v=c6c0c7284622"></script><script defer src="https://cdn.sstatic.net/Js/islands/follow-ups-flag-modal.en.js?v=a1113b2e846d"></script><script type="application/json" data-role="module-args" data-module-name="islands/follow-ups-flag-modal/index.mod">{"ContainerElementId":"js-follow-ups-flag-modal","FKey":"73f6460638360ffb2e4a8ecc08f5f93d06cf2b354c0ac2f03321650dda88b578"}</script>
+<div id="js-follow-ups-experiment-group" data-value="test" class="d-none" data-site-url=""></div>
+
+        </div>
+    </div>
+
+    
+
+    
+
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+
+        gtag('consent', 'default', {
+            'ad_storage': 'denied',
+            'analytics_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied'
+        });
+    </script>
+            <!-- Google tag (gtag.js) -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=G-S812YQPLT2"></script>
+            <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag() { dataLayer.push(arguments); }
+            </script>
+            <script>
+                (function(i, s, o, g, r, a, m) {
+                    i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function() { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m);
+                })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+            </script>
+        <script>
+            StackExchange.ready(function() {
+
+                var ga3Settings = {
+                    autoLink: ["stackoverflow.blog","info.stackoverflowsolutions.com","stackoverflowsolutions.com"],
+                    sendTitles: true,
+                    tracker: window.ga,
+                    trackingCodes: [
+                        'UA-108242619-5'
+                    ],
+                    checkDimension: 'dimension42'
+                };
+
+                var customGA4Dimensions = {};
+
+
+                customGA4Dimensions["requestid"] = "4afe0886-b252-4c5a-b340-cc2d8a638b4e";
+
+                    customGA4Dimensions["routename"] = "Questions/Show";
+
+
+                    customGA4Dimensions["post_id"] = "620123";
+
+
+                    customGA4Dimensions["tags"] = "|nginx|security|logging|tls|ssl|";
+
+
+                var ga4Settings = {
+                    tracker: gtag,
+                    trackingCodes: [
+                        'G-S812YQPLT2'
+                    ],
+                    consentsToPerformanceCookies: "granted",
+                    consentsToTargetingCookies: "granted",
+                    eventParameters: customGA4Dimensions,
+                    checkForAdBlock: true,
+                    sendTitles: true,
+                    trackClicks: false,
+                };
+
+                StackExchange.ga.init({ GA3: ga3Settings, GA4: ga4Settings });
+
+
+                StackExchange.ga.setDimension('dimension2', '|nginx|security|logging|tls|ssl|');
+
+
+                StackExchange.ga.setDimension('dimension3', 'Questions/Show');
+
+
+                StackExchange.ga.setDimension('dimension7', "1755248972.666056088");
+
+                StackExchange.ga.trackPageView();
+            });
+        </script>
+
+            <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-document-language="true" data-domain-script="b7645c37-9f82-4dfb-b719-2b5d032b2a75"></script>
+<script defer src="https://cdn.sstatic.net/Js/sprinkles/cookie-consent.en.js?v=7ee6963139c5"></script>
+
+        
+    <script type="text/javascript">
+    var cam = cam || { opt: {} };
+    var clcGamLoaderOptions = cam || { opt: {} };
+    var opt = clcGamLoaderOptions.opt;
+
+    opt.omni = 'BwoLCLC6ka6v-a0-EAUY2-wlIAMoAjogfG5naW54fHNlY3VyaXR5fGxvZ2dpbmd8dGxzfHNzbHxAAUgBWhIJF_dgzcRZlWERtr8nDpkLjxc1vP3L0eJ9M2eb';
+    opt.refresh = !0;
+    opt.refreshInterval = 30;
+    opt.sf = !1;
+    opt.hb = !1;
+    opt.ll = !0;
+    opt.tlb_position = 0;
+    opt.personalization_consent = !0;
+    opt.targeting_consent = !0;
+    opt.performance_consent = !0;
+
+    opt.targeting = {Registered:['false'],Reputation:['new'],'sf-tag':['nginx','security','logging','tls','ssl'],NumberOfAnswers:['1'],cf_bot_score:'91 - 99'};
+    opt.adReportEnabled = !0;
+    opt.adReportUrl = '/ads/report-ad';
+    opt.adReportText = 'Report this ad';
+	opt.adReportFileTypeErrorMessage = 'Please select a PNG or JPG file.';
+    opt.adReportFileSizeErrorMessage = 'The file must be under 2 MiB.';
+	opt.adReportErrorText = 'Error uploading ad report.';
+	opt.adReportThanksText = 'Thanks for your feedback. We’ll review this against our code of conduct and take action if necessary.';
+    opt.adReportLoginExpiredMessage = 'Your login session has expired, please login and try again.';
+    opt.adReportLoginErrorMessage = 'An error occurred when loading the report form - please try again';
+	opt.adReportModalClass = 'js-ad-report';
+    opt.countryCode = 'RU';
+    opt.qualtricsSurveyData = '{"isRegistered":"False","repBucket":"new","referrer":"https%3a%2f%2fserverfault.com%2fquestions%2f620123%2fhow-can-i-let-nginx-log-the-used-ssl-tls-protocol-and-ciphersuite","accountAge":"0"}';
+
+        opt.brandSurveyEnabled = false;
+    opt.perRequestGuid = '4afe0886-b252-4c5a-b340-cc2d8a638b4e';
+    opt.responseHash = 'KJ/DRs9fPXBVstdAqUPDmN6h&#x2B;2TvtQjRuyV&#x2B;c&#x2B;PGKGc=';
+
+
+    opt.targeting.TargetingConsent = ['True'];
+    opt.allowAccountTargetingForThisRequest = !1;
+
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('dfptestads')) {
+        const dfptestads = urlParams.get('dfptestads');
+        opt.targeting.DfpTestAds = dfptestads;
+    }
+</script>
+<script>;(()=>{"use strict";var __webpack_modules__={23:(e,t,s)=>{s.d(t,{Z7:()=>c,eq:()=>l,kG:()=>d});const n="248424177",o=(a=location.pathname,/^\/tags\//.test(a)||/^\/questions\/tagged\//.test(a)?"tag-pages":/^\/discussions\//.test(a)||/^\/beta\/discussions/.test(a)?"discussions":/^\/$/.test(a)||/^\/home/.test(a)?"home-page":/^\/jobs$/.test(a)||/^\/jobs\//.test(a)?"jobs":"question-pages");var a;let i=location.hostname;const r={slots:{lb:[[728,90]],mlb:[[728,90]],smlb:[[728,90]],bmlb:[[728,90]],sb:e=>"dfp-tsb"===e?[[300,250],[300,600]]:[[300,250]],"tag-sponsorship":[[730,135]],"mobile-below-question":[[320,50],[300,250]],msb:[[300,250],[300,600]],"talent-conversion-tracking":[[1,1]],"site-sponsorship":[[230,60]]},ids:{"dfp-tlb":"lb","dfp-mlb":"mlb","dfp-smlb":"smlb","dfp-bmlb":"bmlb","dfp-tsb":"sb","dfp-isb":"sb","dfp-tag":"tag-sponsorship","dfp-msb":"msb","dfp-sspon":"site-sponsorship","dfp-m-aq":"mobile-below-question"},idsToExcludeFromAdReports:["dfp-sspon"]};function d(){return Object.keys(r.ids)}function l(e){return r.idsToExcludeFromAdReports.indexOf(e)<0}function c(e,t){var s=e.split("_")[0];const a=r.ids[s];let d=r.slots[a];return"function"==typeof d&&(d=d(s)),{path:`/${n}/${t||i}/${a}/${o}`,sizes:d,zone:a}}},865:(e,t,s)=>{function n(e){return"string"==typeof e?document.getElementById(e):e}function o(e){return!!(e=n(e))&&"none"===getComputedStyle(e).display}function a(e){return!o(e)}function i(e){return!!e}function r(e){return/^\s*$/.test(n(e).innerHTML)}function d(e){const{style:t}=e;t.height=t.maxHeight=t.minHeight="auto",t.display="none"}function l(e){const{style:t}=e;t.height=t.maxHeight=t.minHeight="auto",t.display="none",[].forEach.call(e.children,l)}function c(e){const{style:t}=e;t.height=t.maxHeight=t.minHeight="auto",t.removeProperty("display")}function g(e){const t=document.createElement("script");t.src=e,document.body.appendChild(t)}function p(e){return s=e,(t=[]).push=function(e){return s(),delete this.push,this.push(e)},t;var t,s}function h(e){let t="function"==typeof HTMLTemplateElement;var s=document.createElement(t?"template":"div");return e=e.trim(),s.innerHTML=e,t?s.content.firstChild:s.firstChild}s.d(t,{$Z:()=>c,Bv:()=>h,Gx:()=>g,Nj:()=>n,QZ:()=>p,cf:()=>d,pn:()=>a,wo:()=>l,xb:()=>r,xj:()=>o,yb:()=>i})},763:(__unused_webpack_module,__webpack_exports__,__webpack_require__)=>{__webpack_require__.d(__webpack_exports__,{t:()=>AdReports});var _common_helper__WEBPACK_IMPORTED_MODULE_2__=__webpack_require__(865),_console__WEBPACK_IMPORTED_MODULE_1__=__webpack_require__(276),_ad_units__WEBPACK_IMPORTED_MODULE_0__=__webpack_require__(23);class AdReports{constructor(e,t){if(this.googletag=e,this.cam=t,this.allowedFileTypes=["image/png","image/jpg","image/jpeg"],this.ignoreValidation=!1,_console__WEBPACK_IMPORTED_MODULE_1__.cM("Ad reporting init"),this.cam=t,this.callOnButtonClick=e=>this.onButtonClick(e),this.googletag.pubads().addEventListener("slotRenderEnded",e=>this.handleSlotRendered(e)),Array.isArray(t.slotsRenderedEvents)){_console__WEBPACK_IMPORTED_MODULE_1__.cM("Adding report button to "+t.slotsRenderedEvents.length+" events that have transpired");for(var s=0;s<t.slotsRenderedEvents.length;s++)this.handleSlotRendered(t.slotsRenderedEvents[s])}}handleSlotRendered(e){if(e&&e.slot&&!e.isEmpty&&(e.creativeId||e.lineItemId||!e.isEmpty)){var t=e.slot.getSlotElementId();if(t){var s=document.getElementById(t);if(s)if((0,_ad_units__WEBPACK_IMPORTED_MODULE_0__.eq)(t)){var n=s?.closest(".js-zone-container")?.querySelector(".js-report-ad-button-container");n?(n.innerHTML="",n.append(this.createButton(e)),n.style.height="24px",_console__WEBPACK_IMPORTED_MODULE_1__.cM("Added report button to the bottom of "+t)):_console__WEBPACK_IMPORTED_MODULE_1__.cM("Ad report button not found, may be intentional, element: "+t)}else _console__WEBPACK_IMPORTED_MODULE_1__.cM("Not adding report button to the bottom of "+t+": shouldHaveReportButton = false");else _console__WEBPACK_IMPORTED_MODULE_1__.cM("Not adding report button to the bottom of "+t+": resolved invalid adUnit element")}else _console__WEBPACK_IMPORTED_MODULE_
+        
+    <footer id="footer" class="site-footer js-footer" role="contentinfo">
+        <div class="site-footer--container">
+            <nav class="site-footer--nav" aria-label="Footer">
+                    <div class="site-footer--col">
+                        <h5 class="-title"><a href="/">Server Fault</a></h5>
+                        <ul class="-list js-primary-footer-links">
+                                    <li><a class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 2 })" href="/tour">Tour</a></li>
+                                <li><a href="/help" class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 3 })">Help</a></li>
+                                    <li><a class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 5 })" href="https://chat.stackexchange.com/?tab=all&sort=active">Chat</a></li>
+                            <li><a class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 13 })" href="/contact">Contact</a></li>
+                                <li><a class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 14 })" href="https://meta.serverfault.com">Feedback</a></li>
+                        </ul>
+                    </div>
+                <div class="site-footer--col">
+                    <h5 class="-title"><a class="js-gps-track" data-gps-track="footer.click({ location: 2, link: 1 })" href="https://stackoverflow.co/">Company</a></h5>
+                    <ul class="-list">
+                            <li><a href="https://stackoverflow.com" class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 15})">Stack Overflow</a></li>
+                            <li><a href="https://stackoverflow.co/teams/" class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 29 })">Teams</a></li>
+                            <li><a href="https://stackoverflow.co/advertising/" class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 21 })">Advertising</a></li>
+                            <li><a href="https://stackoverflow.co/advertising/employer-branding/" class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 20 })">Talent</a></li>
+                                <li><a class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 1 })" href="https://stackoverflow.co/">About</a></li>
+                        <li><a class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 27 })" href="https://stackoverflow.co/company/press/">Press</a></li>
+                        <li><a class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 7 })" href="https://stackoverflow.com/legal">Legal</a></li>
+                        <li><a class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 8 })" href="https://stackoverflow.com/legal/privacy-policy">Privacy Policy</a></li>
+                        <li><a class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 37 })" href="https://stackoverflow.com/legal/terms-of-service/public">Terms of Service</a></li>
+        <li id="consent-footer-link"><button type="button" data-controller="cookie-settings" data-action="click->cookie-settings#toggle" class="s-btn s-btn__link py4 js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 38 })" data-consent-popup-loader="footer">
+Cookie Settings        </button></li>
+                        <li><a class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 39 })" href="https://policies.stackoverflow.co/stack-overflow/cookie-policy">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                <div class="site-footer--col site-footer--categories-nav">
+                    <div>
+                        <h5 class="-title"><a href="https://stackexchange.com" data-gps-track="footer.click({ location: 2, link: 30 })">Stack Exchange Network</a></h5>
+                        <ul class="-list">
+                            <li>
+                                <a href="https://stackexchange.com/sites#technology" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 24 })">
+                                    Technology
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://stackexchange.com/sites#culturerecreation" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 24 })">
+                                    Culture &amp; recreation
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://stackexchange.com/sites#lifearts" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 24 })">
+                                    Life &amp; arts
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://stackexchange.com/sites#science" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 24 })">
+                                    Science
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://stackexchange.com/sites#professional" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 24 })">
+                                    Professional
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://stackexchange.com/sites#business" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 24 })">
+                                    Business
+                                </a>
+                            </li>
+
+                            <li class="mt16 md:mt0">
+                                <a href="https://api.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 24 })">
+                                    API
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="https://data.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 24 })">
+                                    Data
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="site-footer--copyright fs-fine md:mt24">
+                <ul class="-list -social md:mb8">
+                    <li><a class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link:4 })" href="http://blog.serverfault.com?blb=1">Blog</a></li>
+                    <li><a href="https://www.facebook.com/officialstackoverflow/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 31 })">Facebook</a></li>
+                    <li><a href="https://twitter.com/stackoverflow" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 32 })">Twitter</a></li>
+                    <li><a href="https://linkedin.com/company/stack-overflow" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 33 })">LinkedIn</a></li>
+                    <li><a href="https://www.instagram.com/thestackoverflow" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 36 })">Instagram</a></li>
+                </ul>
+
+                <p class="md:mb0">
+                    <span>Site design / logo © 2025 Stack Exchange Inc; </span>
+                    <span>user contributions licensed under </span>
+                    <a class="-link s-link td-underline" href="https://stackoverflow.com/help/licensing">CC BY-SA</a>
+                    <span>. </span>
+                    <span id="svnrev">rev&nbsp;2025.8.14.32835</span>
+                </p>
+            </div>
+        </div>
+
+    </footer>
+ 
+    </html>

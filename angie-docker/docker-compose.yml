@@ -1,0 +1,27 @@
+services:
+  angie:
+    image: docker.angie.software/angie
+    container_name: angie
+    restart: unless-stopped
+#    ports:
+#      - "80:80"
+#      - "443:443"
+    volumes:
+      - ./ssl:/etc/ssl
+      - ./angie-conf:/etc/angie
+    network_mode: "host"
+#    networks:
+#      - app-network
+#  backend:
+#    image: nginx:1.29.0-alpine
+#    container_name: backend
+#    restart: unless-stopped
+#    ports:
+#      - "8080:80"
+#    volumes:
+#      - ./nginx-conf:/etc/nginx
+#    networks:
+#      - app-network
+#networks:
+#  app-network:
+#    driver: bridge

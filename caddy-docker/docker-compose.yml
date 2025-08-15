@@ -1,0 +1,41 @@
+services:
+  caddy:
+    image: caddy:2.10.0-alpine
+    container_name: caddy
+    hostname: caddy
+#    ports:
+#      - "80:80"
+#      - "443:443"
+#      - "443:443/udp"
+    restart: unless-stopped
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./ssl:/etc/ssl
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    cap_add:
+      - NET_ADMIN
+    network_mode: "host"
+#    networks:
+#      - app-network
+#  backend5:
+#    image: nginx:1.29.0-alpine
+#    container_name: backend5
+#    restart: unless-stopped
+#    ports:
+#      - "8080:80"
+#    volumes:
+#      - ./nginx-conf:/etc/nginx
+#    networks:
+#      - app-network
+volumes:
+  caddy_data:
+  caddy_config:
+#networks:
+#  app-network:
+#    driver: bridge

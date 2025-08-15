@@ -1,0 +1,35 @@
+http:
+  routers:
+    myrouter:
+      rule: "Host(`test.mtdlb.ru`)"
+      entryPoints:
+        - websecure
+      service: myservice
+      middlewares:
+        - "test-compress"
+
+  middlewares:
+    test-compress:
+      compress:
+        includedContentTypes:
+          - application/json
+          - text/html
+          - text/plain
+          - text/css
+
+  services:
+    myservice:
+      loadBalancer:
+        servers:
+          - url: "http://127.0.0.1:8080"
+tls:
+  certificates:
+    - certFile: "/etc/ssl/ssl.pem"
+      keyFile: "/etc/ssl/ssl.key"
+      stores:
+        - default
+  stores:
+    default:
+      defaultCertificate:
+        certFile: "/etc/ssl/ssl.pem"
+        keyFile: "/etc/ssl/ssl.key"

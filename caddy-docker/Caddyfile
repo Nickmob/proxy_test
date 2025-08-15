@@ -1,0 +1,18 @@
+test.mtdlb.ru {
+    log {
+      level ERROR
+    }
+
+    tls /etc/ssl/ssl.pem /etc/ssl/ssl.key {
+    }
+
+#    encode zstd gzip
+
+    encode {
+#	level 1
+	gzip 1
+        zstd fastest
+   }
+
+    reverse_proxy http://localhost:8080
+}
